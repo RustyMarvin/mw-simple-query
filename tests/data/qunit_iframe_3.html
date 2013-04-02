@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--
+		Data for QUnit tests for MW Simple Query
+	-->
+
+	<meta charset="utf-8">
+	<title>MW simpleQuery - iframe</title>
+
+	<script>
+	window.TEST = {
+		step1: document.readyState,
+		step2: ''
+	};
+	</script>
+
+	<script src="../../mw_simple_query.js"></script>
+	<script>
+	window.simpleQuery.onLoad(function () {
+		window.TEST.step2 = document.readyState;
+	});
+	</script>
+
+</head>
+<body>
+
+	<div id="id1" class="cl1"></div>
+
+</body>
+</html>

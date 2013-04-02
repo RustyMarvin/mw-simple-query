@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+/*
+ * Data for QUnit tests for MW DOM Wrapper
+ */
+
+.cl1 {
+	width: 100px;
+	height: 100px;
+}
