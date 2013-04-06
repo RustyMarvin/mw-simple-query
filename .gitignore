@@ -1,4 +1,8 @@
-_DRAFTS
-_SESSION.npp
 _TODO.txt
 .jshintrc
+# notepad++
+_DRAFTS/
+_SESSION.npp
+# eclipse juno
+.settings/
+.project
