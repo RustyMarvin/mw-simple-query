@@ -239,6 +239,7 @@
 	 * @returns {string}			The actual type of the given data.
 	 *
 	 * @see http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/
+	 * @see http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
 	 */
 	var toTypeRE = /\s([a-zA-Z]+)/;
 	simpleQuery.toType = function(obj) {
@@ -1066,6 +1067,7 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/document.createEvent
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent
+	 * @see https://github.com/bitovi/syn#readme
 	 */
 	ElementWrapper.prototype.triggerClick = function () {
 		var click = document.createEvent('UIEvents');
