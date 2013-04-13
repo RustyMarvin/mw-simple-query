@@ -5,7 +5,9 @@
  * MIT License, see LICENSE.txt, see http://www.opensource.org/licenses/mit-license.php
  */
 
-// dom element tests -------------------------------------------------------------
+
+// wrapped element tests
+
 
 module('Wrapped Elements Properties');
 
@@ -15,7 +17,9 @@ test('Offsets', function () {
 
 	var f = document.getElementById('qunit-fixture');
 	var n = document.getElementById('id1');
+
 	var $e = $('#id1');
+
 	ok($e.offsetLeft === n.offsetLeft, 'offsetLeft ok');
 	ok($e.offsetTop === n.offsetTop, 'offsetTop ok');
 	ok($e.offsetWidth === n.offsetWidth, 'offsetWidth ok');

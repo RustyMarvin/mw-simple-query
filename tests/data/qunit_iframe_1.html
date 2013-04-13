@@ -4,16 +4,72 @@
 	<!--
 		Data for QUnit tests for MW Simple Query
 	-->
-
 	<meta charset="utf-8">
 	<title>MW simpleQuery - iframe</title>
 
 	<script src="../../mw_simple_query.js"></script>
+	<script>
+	var parentCall = function (cssFile, count) {
+		var links = document.getElementsByTagName('link'),
+			link = links[links.length - 1];
 
+		window.parent.postMessage({
+			cssCount: count,
+			linkHref: link.href.substr(-1 * cssFile.length),
+			linkRel: link.rel,
+			linkType: link.type
+		}, '*');
+	};
+
+	var testCss = function () {
+		var cssFile = 'qunit_iframe.css',
+			countBefore = document.styleSheets.length;
+			
+		var listener = function () {
+			e.removeEventListener('load', listener);
+			parentCall(cssFile, document.styleSheets.length - countBefore);
+		};
+
+		var e = simpleQuery.addCssFile(cssFile);
+		e.addEventListener('load', listener);
+	};
+
+	var testCssPhantom = function () {
+		var cssFile = 'qunit_iframe.css',
+			countBefore = document.styleSheets.length;
+
+		var checkCounter = 0;
+		var checkCssLoaded = function () {
+			var count = document.styleSheets.length - countBefore;
+
+			if (count === 1) {
+				return parentCall(cssFile, count);
+			}
+
+			if (document.styleSheets.length === 0 && checkCounter < 10) {
+				checkCounter += 1;
+				window.setTimeout(function () {
+					checkCssLoaded();
+				}, 100);
+			}
+		};
+
+		simpleQuery.addCssFile(cssFile);
+		checkCssLoaded();
+	};
+
+	window.simpleQuery.onDOMReady(function () {
+		// TODO: remove ugly browser sniffing and use feature detection
+		if (window.navigator.userAgent.indexOf('PhantomJS') !== -1) {
+			testCssPhantom();
+		} else {
+			testCss();
+		}
+	});
+
+	</script>
 </head>
 <body>
-
-	<div id="id1" class="cl1"></div>
-
+	<div id="id1" class="cl1">iframe 1</div>
 </body>
 </html>

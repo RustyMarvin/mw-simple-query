@@ -5,9 +5,15 @@
  * MIT License, see LICENSE.txt, see http://www.opensource.org/licenses/mit-license.php
  */
 
+// counts for ALL tests
+QUnit.config.testTimeout = 20000;
+
 var qfixAddHtml = function (html) {
 	document.getElementById('qunit-fixture').insertAdjacentHTML('beforeend', html);
 };
+
+
+// simple query tests
 
 
 module('simpleQuery Basic');
@@ -118,56 +124,35 @@ test('#createFragment', function () {
 
 module('simpleQuery CSS');
 
-var qfixAddIframeOnLoad = function (src, callback) {
-	document.getElementById('qunit-fixture').insertAdjacentHTML('beforeend', '<iframe id="iframe1" src="' + src + '"></iframe>');
-	var iframe = document.getElementById('iframe1');
-
-	var iframeLoad = function () {
-		iframe.contentWindow.removeEventListener('load', iframeLoad);
-
-		callback(iframe.contentWindow, iframe.contentDocument, iframe.contentWindow.simpleQuery);
-	};
-
-	iframe.contentWindow.addEventListener('load', iframeLoad);
-};
-
-var callDelayed = function (callback) {
-	window.setTimeout(function () {
-		callback();
-	}, 50);
-};
-
-
 asyncTest('#addCssFile', 4, function () {
-	qfixAddIframeOnLoad('data/qunit_iframe_1.html', function (window, document, $) {
-		// window|document|$ are the iframe ones and intentionally shadowed
-		var cssFile = 'qunit_iframe.css',
-			cssCountBefore = document.styleSheets.length,
-			cssCountAfter;
+	var counter = 0;
+	var timerId;
 
-		// on chrome, document.styleSheets.length gets updated after stylesheet is loaded
-		var e = $.addCssFile(cssFile);
-		var listener = function () {
-			e.removeEventListener('load', listener);
+	var onMessage = function (event) {
+		window.clearTimeout(timerId);
+		window.removeEventListener('message', onMessage, false);
 
-			cssCountAfter = document.styleSheets.length;
-			ok(cssCountBefore === 0 && cssCountAfter === 1, 'Css file appended to document');
+		var d = event.data;
+		ok(d.cssCount === 1, 'Css file appended to document');
+		ok(d.linkHref === 'qunit_iframe.css', 'Head link element href attribute is set correctly');
+		ok(d.linkRel === 'stylesheet', 'Head link element rel attribute is set correctly');
+		ok(d.linkType === 'text/css', 'Head link element type attribute is set correctly');
 
-			var lnk = document.getElementsByTagName('link')[0];
-			ok(lnk.href.substr(-1 * cssFile.length) === cssFile, 'Head link element href attribute is set correctly');
-			ok(lnk.rel === 'stylesheet', 'Head link element rel attribute is set correctly');
-			ok(lnk.type === 'text/css', 'Head link element type attribute is set correctly');
+		start();
+	};
+	window.addEventListener('message', onMessage, false);
 
-			start();
-		};
-		e.addEventListener('load', listener);
-	});
+	timerId = window.setTimeout(function () {
+		window.removeEventListener('message', onMessage, false);
+		ok(false, 'Event timeout!');
+		start();
+	}, 2000);
+
+	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_1.html"></iframe>');
 });
-
 
 test('#addCssRule / error', function () {
 	var $ = window.simpleQuery;
-	// qfixAddHtml('<div class="id1"></div>');
 	
 	throws(
 		function () { $.addCssRule(1); },
@@ -176,29 +161,39 @@ test('#addCssRule / error', function () {
 	);
 });
 
-asyncTest('#addCssRule / async', 15, function () {
-	qfixAddIframeOnLoad('data/qunit_iframe_1.html', function (window, document, $) {
-		// window|document|$ are the iframe ones and intentionally shadowed
+asyncTest('#addCssRule / async', 14, function () {
+	var timerId;
+
+	var onMessage = function (event) {
+		window.clearTimeout(timerId);
+		window.removeEventListener('message', onMessage, false);
+
+		var iframe = document.getElementById('iframe1'),
+			iWin = iframe.contentWindow,
+			iDoc = iframe.contentDocument,
+			i$ = iframe.contentWindow.simpleQuery;
+
+		// tests
 		var cssRule1 = '.cl1 { width: 100px; height: 110px; }',
 			cssRule2 = '.cl2 { width: 200px; height: 220px; }',
-			cssCountBefore = document.styleSheets.length,
-			cssCountAfter;
+			cssCountBefore = iDoc.styleSheets.length;
 
-		$.addCssRule(cssRule1);
-		cssCountAfter = document.styleSheets.length;
-		ok(cssCountBefore === 0 && cssCountAfter === 1, 'Stylesheet appended to document');
-		ok(document.styleSheets[0].cssRules.length === 1, 'First CSS rule appended');
-		ok($._styleSheet === document.styleSheets[0], 'Appended stylesheet stored internally');
+		i$.addCssRule(cssRule1);
 
-		$.addCssRule(cssRule2);
-		ok($._styleSheet.cssRules.length === 2, 'Second CSS rule appended internally');
-		ok(document.styleSheets[0].cssRules.length === 2, 'Second CSS rule appended to documents stylesheet');
+		ok(iDoc.styleSheets.length - cssCountBefore === 1, 'New stylesheet appended to document');
 
-		ok($._styleSheet === document.styleSheets[0], 'Internally stored stylesheet still equals document stylesheet');
-		ok(document.styleSheets.length === 1, 'Document still contains only one stylesheet');
+		var sheet = iDoc.styleSheets[iDoc.styleSheets.length - 1];
+		ok(i$._styleSheet === sheet, 'Appended stylesheet stored internally');
+		ok(sheet.cssRules.length === 1, 'First CSS rule appended');
 
-		var r1 = document.styleSheets[0].cssRules[0],
-			r2 = document.styleSheets[0].cssRules[1];
+		i$.addCssRule(cssRule2);
+
+		ok(sheet.cssRules.length === 2, 'Second CSS rule appended');
+		ok(i$._styleSheet === sheet, 'Internally stored stylesheet still equals document stylesheet');
+		ok(iDoc.styleSheets.length - cssCountBefore === 1, 'Document still contains only one stylesheet');
+
+		var r1 = sheet.cssRules[0],
+			r2 = sheet.cssRules[1];
 
 		ok(r1.selectorText === '.cl1', 'First rule selector is correct');
 		ok(r2.selectorText === '.cl2', 'Second rule selector is correct');
@@ -212,7 +207,16 @@ asyncTest('#addCssRule / async', 15, function () {
 		ok('height' in r2.style && r2.style.getPropertyValue('height') === '220px', 'Second rules second style property is set correctly');
 
 		start();
-	});
+	};
+	window.addEventListener('message', onMessage, false);
+
+	timerId = window.setTimeout(function () {
+		window.removeEventListener('message', onMessage, false);
+		ok(false, 'Event timeout!');
+		start();
+	}, 2000);
+
+	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_4.html"></iframe>');
 });
 
 module('simpleQuery Events');
@@ -229,18 +233,40 @@ test('#onDOMReady / error', function () {
 });
 
 asyncTest('#onDOMReady / async', 2, function () {
-	qfixAddIframeOnLoad('data/qunit_iframe_2.html', function (window, document, $) {
-		// window|document|$ are the iframe ones and intentionally shadowed
-		ok(window.TEST && window.TEST.step1 === 'loading', 'Initialized');
-		ok(window.TEST && window.TEST.step2 === 'interactive', 'onDOMReady fired');
-	
+	var counter = 0;
+	var timerId;
+
+	var onMessage = function (event) {
+		switch (event.data) {
+		case 'START':
+			counter += 1;
+			ok(counter === 1, 'Initialized');
+			break;
+		case 'DOM_READY':
+			counter += 1;
+			ok(counter === 2, 'onDOMReady fired');
+			break;
+		}
+
+		if (counter === 2) {
+			window.clearTimeout(timerId);
+			window.removeEventListener('message', onMessage, false);
+			start();
+		}
+	};
+	window.addEventListener('message', onMessage, false);
+
+	timerId = window.setTimeout(function () {
+		window.removeEventListener('message', onMessage, false);
+		ok(false, 'Event timeout!');
 		start();
-	});
+	}, 2000);
+
+	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_2.html"></iframe>');
 });
 
 test('#onLoad / error', function () {
 	var $ = window.simpleQuery;
-	// qfixAddHtml('<div class="id1"></div>');
 	
 	throws(
 		function () { $.onLoad('x'); },
@@ -250,16 +276,34 @@ test('#onLoad / error', function () {
 });
 
 asyncTest('#onLoad / async', 2, function () {
-	qfixAddIframeOnLoad('data/qunit_iframe_3.html', function (window, document, $) {
-		// window|document|$ are the iframe ones and intentionally shadowed
-		ok(window.TEST && window.TEST.step1 === 'loading', 'Initialized');
+	var counter = 0;
+	var timerId;
 
-		// the iframes onLoad fires BEFORE the iframe documents onLoad fires!
-		// so we have to delay the test
-		callDelayed(function () {
-			ok(window.TEST && window.TEST.step2 === 'complete', 'onLoad fired');
-		
+	var onMessage = function (event) {
+		switch (event.data) {
+		case 'START':
+			counter += 1;
+			ok(counter === 1, 'Initialized');
+			break;
+		case 'LOADED':
+			counter += 1;
+			ok(counter === 2, 'onLoad fired');
+			break;
+		}
+
+		if (counter === 2) {
+			window.clearTimeout(timerId);
+			window.removeEventListener('message', onMessage, false);
 			start();
-		});
-	});
+		}
+	};
+	window.addEventListener('message', onMessage, false);
+
+	timerId = window.setTimeout(function () {
+		window.removeEventListener('message', onMessage, false);
+		ok(false, 'Event timeout!');
+		start();
+	}, 2000);
+
+	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_3.html"></iframe>');
 });

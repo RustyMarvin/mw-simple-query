@@ -9,14 +9,24 @@
 
 	<script src="../../mw_simple_query.js"></script>
 	<script>
-	window.parent.postMessage('START', '*');
-
 	window.simpleQuery.onLoad(function () {
 		window.parent.postMessage('LOADED', '*');
+
+		/*
+		var cssRule1 = '.cl1 { width: 100px; height: 110px; }';
+
+		simpleQuery.addCssRule(cssRule1);
+
+		var sheet = document.styleSheets[0];
+		console.log(sheet)
+
+		sheet.insertRule(cssRule1, 0);
+		console.log(sheet)
+		*/
 	});
 	</script>
 </head>
 <body>
-	<div id="id1" class="cl1">iframe 3</div>
+	<div id="id1" class="cl1">iframe 4</div>
 </body>
 </html>
