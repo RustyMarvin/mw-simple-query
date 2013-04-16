@@ -25,7 +25,7 @@ If you already know jQuery, this should look familiar.
 		<script>
 		(function ($) {
 			$.onDOMReady(function () {
-				$('h1').style('cursor', 'pointer').onClick(function (elem) { $.wrap(this).style('color', 'red'); });
+				$('h1').style('cursor', 'pointer').onClick(function (e) { $.wrap(this).style('color', 'red'); });
 			});
 		}(window.simpleQuery));
 		</script>
