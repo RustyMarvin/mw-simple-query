@@ -124,7 +124,17 @@ test('#createFragment', function () {
 
 module('simpleQuery CSS');
 
-asyncTest('#addCssFile', 4, function () {
+test('#addCssFile / error', function () {
+	var $ = window.simpleQuery;
+	
+	throws(
+		function () { $.addCssFile(1); },
+		TypeError,
+		'Throws type error if no string given as file path'
+	);
+});
+
+asyncTest('#addCssFile / async', 4, function () {
 	var counter = 0;
 	var timerId;
 

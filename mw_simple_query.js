@@ -123,8 +123,13 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/HTML/Element/link
 	 */
 	simpleQuery.addCssFile = function (relPath) {
-		var e = document.createElement('link');
+		var e;
 
+		if (typeof relPath !== 'string') {
+			throw new TypeError('simpleQuery#addCssFile: Invalid type for path given!');
+		}
+
+		e = document.createElement('link');
 		e.setAttribute('href', relPath);
 		e.setAttribute('rel', 'stylesheet');
 		e.setAttribute('type', 'text/css');
