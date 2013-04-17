@@ -632,17 +632,17 @@ test('#childElement', function () {
 	ok(c.node.innerHTML === 'Second', 'Returned child node correctly');
 });
 
-test('#getChildElements', function () {
+test('#childElements', function () {
 	var $ = window.simpleQuery;
 	// includes text nodes
 	qfixAddHtml('<div id="id1">\n<span id="s1">First</span>\n<span id="s2">Second</span>\n</div><div id="id2">\n</div>');
 
 	var a;
 
-	a = $('#id2').getChildElements();
+	a = $('#id2').childElements();
 	ok(a.length === 0, 'Returned empty array if no child elements');
 
-	a = $('#id1').getChildElements();
+	a = $('#id1').childElements();
 	ok(a.length === 2, 'Returned array length correctly');
 	ok(a[0].node.innerHTML === 'First', 'Returned first child element correctly');
 	ok(a[1].node.innerHTML === 'Second', 'Returned second child element correctly');
@@ -666,12 +666,12 @@ test('#removeChild', function () {
 
 	$c = $e.removeChild($e.select('#s1'));
 	ok($c.node === n1, 'Removed child (wrapped element) returned');
-	ok($e.getChildElements().length === 1, 'Remaining child count ok');
+	ok($e.childElements().length === 1, 'Remaining child count ok');
 
 	c = $e.select('#s2').node;
 	$c = $e.removeChild(c);
 	ok($c.node === n2, 'Removed child (dom element) returned');
-	ok($e.getChildElements().length === 0, 'Remaining child count ok');
+	ok($e.childElements().length === 0, 'Remaining child count ok');
 });
 
 test('#append', function () {

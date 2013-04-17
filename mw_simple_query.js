@@ -890,7 +890,7 @@
 	 *
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Element.children
 	 */
-	ElementWrapper.prototype.getChildElements = function () {
+	ElementWrapper.prototype.childElements = function () {
 		return Array.prototype.slice.call(this._n.children)
 			.map(function (node) {
 				return new ElementWrapper(node);
