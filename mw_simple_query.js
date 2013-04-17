@@ -662,44 +662,45 @@
 	/**
 	 * Gets/sets styles on this wrapped element.
 	 *
-	 * Gets a computed style value for the given key from this wrapped element.
-	 * @param {string} data			A CSS style name.
-	 * @returns {string|undefined}	The value associated with the key,
-	 *								if no value then an empty string, undefined if key not found.
+	 * Gets a computed style value for the given style name from this wrapped element.
+	 * @param {string} name			A CSS style name.
+	 * @returns {string|undefined}	The value associated with the name,
+	 *								if no value then an empty string, undefined if name not found.
 	 *
 	 * Sets a style value on this wrapped element.
-	 * @param {string} data			A CSS style name.
+	 * @param {string} name			A CSS style name.
 	 * @param {string} value		The new style value.
 	 * @returns {object}			This wrapped element.
 	 *
 	 * Sets style name/value pairs given as object on this wrapped element.
-	 * @param {object} data			A object containing CSS name/value pairs.
+	 * @param {object} name			A object containing CSS name/value pairs.
 	 * @returns {object}			This wrapped element.
 	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.style
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/window.getComputedStyle
 	 */
-	ElementWrapper.prototype.style = function (data, value) {
+	ElementWrapper.prototype.style = function (name, value) {
 		var key;
 
-		if (typeof data === 'string') {
+		if (typeof name === 'string') {
 			if (value === undefined) {
 				// get single computed style
-				return window.getComputedStyle(this._n)[data];
+				return window.getComputedStyle(this._n)[name];
 			}
 			if (typeof value !== 'string' && typeof value !== 'number') {
 				throw new TypeError('simpleQuery#style: Invalid type for value given!');
 			}
 			// set single style
-			this._n.style[data] = value;
+			this._n.style[name] = value;
 			return this;
 		}
-		if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
+		if (typeof name === 'object' && name !== null && !Array.isArray(name)) {
 			// set styles from object with key/value pairs
-			for (key in data) {
-				if (typeof data[key] !== 'string' && typeof data[key] !== 'number') {
+			for (key in name) {
+				if (typeof name[key] !== 'string' && typeof name[key] !== 'number') {
 					throw new TypeError('simpleQuery#style: Invalid type for \'' + key + '\' in given object!');
 				}
-				this._n.style[key] = data[key];
+				this._n.style[key] = name[key];
 			}
 			return this;
 		}
