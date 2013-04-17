@@ -885,7 +885,7 @@ test('#triggerClick', function () {
 	n.removeEventListener('click', handler, false);
 });
 
-test('#onMouseEnter', function () {
+test('#onMouseenter', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
 
@@ -893,7 +893,7 @@ test('#onMouseEnter', function () {
 	var $e = $('#id1');
 
 	throws(
-		function () { $e.onMouseEnter(); },
+		function () { $e.onMouseenter(); },
 		TypeError,
 		'Throws type error if handler is not a function'
 	);
@@ -901,7 +901,7 @@ test('#onMouseEnter', function () {
 	var counter = 0;
 	var handler = function () { counter += 1; };
 
-	$e.onMouseEnter(handler);
+	$e.onMouseenter(handler);
 
 	// outer div -> test div, should trigger
 	triggerMouseEvent('mouseover', n, $('#outer').node);
@@ -914,7 +914,7 @@ test('#onMouseEnter', function () {
 	$e.node.removeEventListener('mouseover', handler, false);
 });
 
-test('#onMouseLeave', function () {
+test('#onMouseleave', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
 
@@ -922,7 +922,7 @@ test('#onMouseLeave', function () {
 	var $e = $('#id1');
 
 	throws(
-		function () { $e.onMouseLeave(); },
+		function () { $e.onMouseleave(); },
 		TypeError,
 		'Throws type error if handler is not a function'
 	);
@@ -930,7 +930,7 @@ test('#onMouseLeave', function () {
 	var counter = 0;
 	var handler = function () { counter += 1; };
 
-	$e.onMouseLeave(handler);
+	$e.onMouseleave(handler);
 
 	// test div -> outer div, should trigger
 	triggerMouseEvent('mouseout', n, $('#outer').node);

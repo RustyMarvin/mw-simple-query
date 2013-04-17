@@ -1100,11 +1100,11 @@
 	 * @see http://www.quirksmode.org/js/events_mouse.html#mouseover
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
-	ElementWrapper.prototype.onMouseEnter = function (handler) {
+	ElementWrapper.prototype.onMouseenter = function (handler) {
 		var thisNode;
 
 		if (typeof handler !== 'function') {
-			throw new TypeError('simpleQuery#onMouseEnter: Invalid type for handler given!');
+			throw new TypeError('simpleQuery#onMouseenter: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
@@ -1127,11 +1127,11 @@
 	 * @see http://www.quirksmode.org/js/events_mouse.html#mouseover
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
-	ElementWrapper.prototype.onMouseLeave = function (handler) {
+	ElementWrapper.prototype.onMouseleave = function (handler) {
 		var thisNode;
 
 		if (typeof handler !== 'function') {
-			throw new TypeError('simpleQuery#onMouseLeave: Invalid type for handler given!');
+			throw new TypeError('simpleQuery#onMouseleave: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
