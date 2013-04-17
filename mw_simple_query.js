@@ -999,10 +999,16 @@
 	ElementWrapper.prototype.hide = function (display) {
 		var cs;
 
+		if (display !== undefined && typeof display !== 'string') {
+			throw new TypeError('simpleQuery#hide: Invalid type for display given!');
+		}
+
+		// already hidden?
+		if (this._n.style.display === 'none') {
+			return;
+		}
+
 		if (display) {
-			if (typeof display !== 'string') {
-				throw new TypeError('simpleQuery#hide: Invalid type for display given!');
-			}
 			this._oldDisplay = display;
 		} else {
 			cs = window.getComputedStyle(this._n).display;
