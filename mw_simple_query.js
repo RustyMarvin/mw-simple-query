@@ -369,15 +369,15 @@
 	};
 
 	/**
-	 * Checks if this wrapper refers to the same dom element as the given wrapper.
-	 * @param {object} wrapper		The wrapped element to compare.
-	 * @returns {boolean}			True if this wrapper refers to the same dom element as the given one.
+	 * Checks if this wrapped element refers to the same dom element as the given wrapped element.
+	 * @param {object} node		The wrapped element to compare.
+	 * @returns {boolean}		True if this wrapped element refers to the same dom element as the given one.
 	 */
-	ElementWrapper.prototype.sameNode = function (wrapper) {
-		if (typeof wrapper !== 'object' || !('_n' in wrapper)) {
-			throw new TypeError('simpleQuery#sameNode: Invalid type for wrapper given!');
+	ElementWrapper.prototype.sameNode = function (node) {
+		if (typeof node !== 'object' || !('_n' in node)) {
+			throw new TypeError('simpleQuery#sameNode: Invalid type for node given!');
 		}
-		return this._n === wrapper._n;
+		return this._n === node._n;
 	};
 
 	// ─────── attributes ─────────────────────────────────────────────────────
@@ -528,7 +528,7 @@
 	/**
 	 * Get all offset values as object from this wrapped element:
 	 * offsetLeft, offsetTop, offsetWidth, offsetHeight, offsetParent.
-	 * @returns {object}	Offset object with keys: 'left', 'top', 'width', 'height', 'parent'.
+	 * @returns {object}	Offset object: { left: {number}, top: {number}, width: {number}, height: {number}, parent: {object, dom element} }
 	 *
 	 * @see MDN https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements
 	 */
@@ -593,22 +593,23 @@
 
 	/**
 	 * Gets/sets user data on this wrapped element.
-	 * element.data('myKey', 1) sets element attribute data-my-key="1"
+	 * Note: this method may alter the key, see MDN for more info.
+	 * E.g.: element.data('myKey', 1) sets element attribute data-my-key="1"
 	 *
 	 * Gets a single data value from this wrapped element.
 	 * @param {string} data			The key.
 	 * @returns {string|undefined}	The value associated with the key or undefined if key not found.
 	 *
 	 * Gets all data key/value pairs as object from this wrapped element.
-	 * @returns {object|null}		A object containing key/value pairs or null if no data found.
+	 * @returns {object|null}		An object containing key/value pairs or null if no data found.
 	 *
 	 * Sets a single data key/value pair on this wrapped element.
 	 * @param {string} data			The key.
 	 * @param {string} value		The new value associated with the key.
 	 * @returns {object}			This wrapped element.
 	 *
-	 * Sets data key/value pairs given as object on this wrapped element.
-	 * @param {object} data			A object containing key/value pairs.
+	 * Gets all data as object with key/value pairs from the wrapped element.
+	 * @param {object} data			An object containing key/value pairs.
 	 * @returns {object}			This wrapped element.
 	 *
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.dataset
@@ -883,9 +884,8 @@
 
 	/**
 	 * Returns this wrapped elements child elements as array of wrapped elements.
-	 * Note: Does NOT include any text nodes.
-	 * @param {number} index	The index of this wrapped elements child to return.
-	 * @returns {object}		The child as wrapped element.
+	 * Child elements do not include any text node, only html element nodes.
+	 * @returns {object}		The child elements as array of wrapped elements.
 	 *
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Element.children
 	 */
@@ -898,7 +898,8 @@
 
 	/**
 	 * Removes the given child wrapped element/dom node from this wrapped element and returns it.
-	 * @returns {object}	The removed child as wrapped element.
+	 * @param {object} node		The child node to remove, given as wrapped element or dom element.
+	 * @returns {object}		The removed child as wrapped element.
 	 *
 	 * @see MDN https://developer.mozilla.org/de/docs/DOM/Node.removeChild
 	 */
@@ -960,9 +961,9 @@
 
 	/**
 	 * Inserts the given wrapped element|dom node to this wrapped elements childs,
-	 * before the given reference wrapped elements|dom node.
-	 * @param {object} newContent	The dom node or wrapped element to be inserted.
-	 * @param {object} refContent	The reference dom or wrapped element.
+	 * before the given reference wrapped element|dom node.
+	 * @param {object} insertNode	The dom node or wrapped element to be inserted.
+	 * @param {object} refNode		The reference dom node or wrapped element.
 	 * @returns {object}			This wrapped element.
 	 *
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Node.insertBefore
