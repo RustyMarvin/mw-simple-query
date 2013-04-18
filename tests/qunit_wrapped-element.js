@@ -827,11 +827,19 @@ test('#onClick', function () {
 	);
 
 	var clicked = 0;
-	var handler = function () { clicked += 1; };
+	var handlerThis = null;
+	var eventType = '';
+	var handler = function (event) {
+		clicked += 1;
+		handlerThis = this;
+		eventType = event.type;
+	};
 
 	$e.onClick(handler);
 	triggerEvent('click', $e.node);
 	ok(clicked === 1, 'Event \'click\' attached and handled');
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(eventType === 'click', 'Event object given to handler, event type is \'click\'');
 	$e.node.removeEventListener('click', handler, false);
 
 	triggerEvent('click', $e.node);
@@ -857,11 +865,19 @@ test('#onEvent', function () {
 	);
 
 	var clicked = 0;
-	var handler = function () { clicked += 1; };
+	var handlerThis = null;
+	var eventType = '';
+	var handler = function (event) {
+		clicked += 1;
+		handlerThis = this;
+		eventType = event.type;
+	};
 
 	$e.onEvent('click', handler);
 	triggerEvent('click', $e.node);
 	ok(clicked === 1, 'Event \'click\' attached and handled');
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(eventType === 'click', 'Event object given to handler, event type is \'click\'');
 	$e.node.removeEventListener('click', handler, false);
 
 	triggerEvent('click', $e.node);
@@ -899,13 +915,21 @@ test('#onMouseenter', function () {
 	);
 
 	var counter = 0;
-	var handler = function () { counter += 1; };
+	var handlerThis = null;
+	var eventType = '';
+	var handler = function (event) {
+		counter += 1;
+		handlerThis = this;
+		eventType = event.type;
+	};
 
 	$e.onMouseenter(handler);
 
 	// outer div -> test div, should trigger
 	triggerMouseEvent('mouseover', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseenter\' attached and triggered (outer div to test div)');
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(eventType === 'mouseover', 'Event object given to handler, event type is \'mouseover\'');
 
 	// inner div -> test div, should NOT trigger
 	triggerMouseEvent('mouseover', n, $('#inner').node);
@@ -928,13 +952,21 @@ test('#onMouseleave', function () {
 	);
 
 	var counter = 0;
-	var handler = function () { counter += 1; };
+	var handlerThis = null;
+	var eventType = '';
+	var handler = function (event) {
+		counter += 1;
+		handlerThis = this;
+		eventType = event.type;
+	};
 
 	$e.onMouseleave(handler);
 
 	// test div -> outer div, should trigger
 	triggerMouseEvent('mouseout', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseleave\' attached and triggered (test div to outer div)');
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(eventType === 'mouseout', 'Event object given to handler, event type is \'mouseout\'');
 
 	// test div -> inner div, should NOT trigger
 	triggerMouseEvent('mouseout', n, $('#inner').node);

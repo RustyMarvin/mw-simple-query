@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.1
+ * MW Simple Query, v2.2
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
@@ -1035,6 +1035,8 @@
 
 	/**
 	 * Adds a 'click' event listener to this wrapped element.
+	 * 'this' inside the handler is set to the dom element that triggered the event.  
+	 * The handler gets the event object as parameter.
 	 * @param {function} handler	The event handler.
 	 * @returns {object}			This wrapped element.
 	 *
@@ -1053,6 +1055,8 @@
 
 	/**
 	 * Adds an event listener to this wrapped element.
+	 * 'this' inside the handler is set to the dom element that triggered the event.  
+	 * The handler gets the event object as parameter.
 	 * @param {string} name			The event name.
 	 * @param {function} handler	The event handler.
 	 * @returns {object}			This wrapped element.
@@ -1094,6 +1098,8 @@
 	/**
 	 * Adds a 'mouseover' event listener to this wrapped element
 	 * and emulates 'mouseenter' behaviour.
+	 * 'this' inside the handler is set to the dom element that triggered the event.  
+	 * The handler gets the event object as parameter.
 	 * @param {function} handler	The event handler.
 	 * @returns {object}			This wrapped element.
 	 *
@@ -1121,6 +1127,8 @@
 	/**
 	 * Adds a 'mouseout' event listener to this wrapped element
 	 * and emulates 'mouseleave' behaviour.
+	 * 'this' inside the handler is set to the dom element that triggered the event.  
+	 * The handler gets the event object as parameter.
 	 * @param {function} handler	The event handler.
 	 * @returns {object}			This wrapped element.
 	 *
