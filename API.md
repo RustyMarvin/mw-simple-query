@@ -137,6 +137,18 @@ info: [javascriptweblog.wordpress.com](http://javascriptweblog.wordpress.com/201
 info: [perfectionkills.com](http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/)
 
 
+### simpleQuery.toArray( arrayLike )
+
+Converts an array like object (e.g. a dom node list) to a real javascript array.
+
+**arrayLike** _{object}_: An array like object.  
+**returns** _{array}_: A javascript array.
+
+	var a = simpleQuery.toArray( {0:'a', 1:'b', length:2} ); // a contains ['a', 'b']
+
+info: [MDN Array.slice](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/slice)
+
+
 <a name="wrapped-element-properties"></a>
 ## Properties of the wrapped element returned from simpleQuery methods
 
@@ -703,7 +715,7 @@ wraps: [document.createEvent](https://developer.mozilla.org/en-US/docs/DOM/docum
 wraps: [element.dispatchEvent](https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent)
 
 
-### .onMouseEnter( handler ) / .onMouseLeave( handler )
+### .onMouseenter( handler ) / .onMouseleave( handler )
 
 Adds a 'mouseenter'/'mouseleave' event listener to the wrapped element.  
 Note: Actually a 'mouseover'/'mouseout' event listener is attached and 'mouseenter'/'mouseleave' behaviour is emulated.
@@ -712,8 +724,8 @@ Note: Actually a 'mouseover'/'mouseout' event listener is attached and 'mouseent
 **returns** _{object}_: The wrapped element.
 
 	simpleQuery('div.header')
-		.onMouseEnter(function () { $.wrap(this).style(color: 'red'); })
-		.onMouseLeave(function () { $.wrap(this).style(color: 'black'); });
+		.onMouseenter(function () { $.wrap(this).style(color: 'red'); })
+		.onMouseleave(function () { $.wrap(this).style(color: 'black'); });
 
 info: [www.quirksmode.org](http://www.quirksmode.org/js/events_mouse.html#mouseover)  
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
