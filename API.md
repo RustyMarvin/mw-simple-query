@@ -563,14 +563,14 @@ Note: Child elements do not include any text node, only html element nodes.
 wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.children)
 
 
-### .getChildElements()
+### .childElements()
 
 Returns the wrapped elements child elements as array of wrapped elements.  
 Note: Child elements do not include any text node, only html element nodes.
 
 **returns** _{array}_: The child elements as array of wrapped elements.
 
-	var a = simpleQuery('div.header').getChildElements();
+	var a = simpleQuery('div.header').childElements();
 
 wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.children)
 
