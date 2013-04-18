@@ -15,6 +15,14 @@
 	* [.toType( variable )](#simple-query-totype)
 	* [.toArray( arrayLike )](#simple-query-toarray)
 * [Properties of the wrapped element](#wrapped-element-properties)
+	* [.node](#simple-query-node)
+	* [.offsetLeft](#simple-query-offset-numbers)
+	* [.offsetTop](#simple-query-offset-numbers)
+	* [.offsetWidth](#simple-query-offset-numbers)
+	* [.offsetHeight](#simple-query-offset-numbers)
+	* [.offsetParent](#simple-query-offset-parent)
+	* [.checked](#simple-query-checked)
+	* [.selected](#simple-query-selected)
 * [Methods on the wrapped element](#wrapped-element-methods)
 
 
@@ -23,6 +31,7 @@
 
 <a name="simple-query-methods"></a>
 ## Methods on the simpleQuery object
+
 
 <a name="simple-query"></a>
 ### simpleQuery( selector [, context] )
@@ -197,9 +206,8 @@ info: [MDN Array.slice](https://developer.mozilla.org/en-US/docs/JavaScript/Refe
 <a name="wrapped-element-properties"></a>
 ## Properties of the wrapped element returned from simpleQuery methods
 
-[↑up](#toc)
 
-
+<a name="simple-query-node"></a>
 ### .node
 
 _{object} readonly_: The wrapped DOM element.
@@ -207,6 +215,7 @@ _{object} readonly_: The wrapped DOM element.
 [↑up](#toc)
 
 
+<a name="simple-query-offset-numbers"></a>
 ### .offsetLeft, .offsetTop, .offsetWidth, .offsetHeight
 
 _{number} readonly_: The offset values of the wrapped element.
@@ -214,6 +223,7 @@ _{number} readonly_: The offset values of the wrapped element.
 [↑up](#toc)
 
 
+<a name="simple-query-offset-parent"></a>
 ### .offsetParent
 
 _{object} readonly_: The offset parent of the wrapped element.
@@ -221,6 +231,7 @@ _{object} readonly_: The offset parent of the wrapped element.
 [↑up](#toc)
 
 
+<a name="simple-query-checked"></a>
 ### .checked
 
 _{boolean}_: The checked state of the wrapped element.  
@@ -229,6 +240,7 @@ Only usefull for `<input type="radio|checkbox">`.
 [↑up](#toc)
 
 
+<a name="simple-query-selected"></a>
 ### .selected
 
 _{boolean}_: The selected state of the wrapped element.  
