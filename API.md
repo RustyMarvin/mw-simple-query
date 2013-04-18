@@ -15,14 +15,14 @@
 	* [.toType( variable )](#simple-query-totype)
 	* [.toArray( arrayLike )](#simple-query-toarray)
 * [Properties of the wrapped element](#wrapped-element-properties)
-	* [.node](#simple-query-node)
-	* [.offsetLeft](#simple-query-offset-numbers)
-	* [.offsetTop](#simple-query-offset-numbers)
-	* [.offsetWidth](#simple-query-offset-numbers)
-	* [.offsetHeight](#simple-query-offset-numbers)
-	* [.offsetParent](#simple-query-offset-parent)
-	* [.checked](#simple-query-checked)
-	* [.selected](#simple-query-selected)
+	* [.node](#wrapped-element-node)
+	* [.offsetLeft](#wrapped-element-offset-numbers)
+	* [.offsetTop](#wrapped-element-offset-numbers)
+	* [.offsetWidth](#wrapped-element-offset-numbers)
+	* [.offsetHeight](#wrapped-element-offset-numbers)
+	* [.offsetParent](#wrapped-element-offset-parent)
+	* [.checked](#wrapped-element-checked)
+	* [.selected](#wrapped-element-selected)
 * [Methods on the wrapped element](#wrapped-element-methods)
 
 
@@ -207,7 +207,7 @@ info: [MDN Array.slice](https://developer.mozilla.org/en-US/docs/JavaScript/Refe
 ## Properties of the wrapped element returned from simpleQuery methods
 
 
-<a name="simple-query-node"></a>
+<a name="wrapped-element-node"></a>
 ### .node
 
 _{object} readonly_: The wrapped DOM element.
@@ -215,7 +215,7 @@ _{object} readonly_: The wrapped DOM element.
 [↑up](#toc)
 
 
-<a name="simple-query-offset-numbers"></a>
+<a name="wrapped-element-offset-numbers"></a>
 ### .offsetLeft, .offsetTop, .offsetWidth, .offsetHeight
 
 _{number} readonly_: The offset values of the wrapped element.
@@ -223,7 +223,7 @@ _{number} readonly_: The offset values of the wrapped element.
 [↑up](#toc)
 
 
-<a name="simple-query-offset-parent"></a>
+<a name="wrapped-element-offset-parent"></a>
 ### .offsetParent
 
 _{object} readonly_: The offset parent of the wrapped element.
@@ -231,7 +231,7 @@ _{object} readonly_: The offset parent of the wrapped element.
 [↑up](#toc)
 
 
-<a name="simple-query-checked"></a>
+<a name="wrapped-element-checked"></a>
 ### .checked
 
 _{boolean}_: The checked state of the wrapped element.  
@@ -240,7 +240,7 @@ Only usefull for `<input type="radio|checkbox">`.
 [↑up](#toc)
 
 
-<a name="simple-query-selected"></a>
+<a name="wrapped-element-selected"></a>
 ### .selected
 
 _{boolean}_: The selected state of the wrapped element.  
