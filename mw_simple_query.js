@@ -384,7 +384,7 @@
 		if (typeof selector !== 'string') {
 			throw new TypeError('simpleQuery#selectAll: Invalid type for selector given!');
 		}
-		return this.toArray(this._n.querySelectorAll(selector))
+		return simpleQuery.toArray(this._n.querySelectorAll(selector))
 			.map(function (node) {
 				return new ElementWrapper(node);
 			});
@@ -913,7 +913,7 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Element.children
 	 */
 	ElementWrapper.prototype.childElements = function () {
-		return this.toArray(this._n.children)
+		return simpleQuery.toArray(this._n.children)
 			.map(function (node) {
 				return new ElementWrapper(node);
 			});
