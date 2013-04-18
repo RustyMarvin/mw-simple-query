@@ -120,6 +120,24 @@ test('#createFragment', function () {
 	ok($e1.node.nodeType === 11, 'Returned wrapped element wraps a document fragment');
 });
 
+module('simpleQuery Utilities');
+
+test('#toArray', function () {
+	var $ = window.simpleQuery;
+	// qfixAddHtml('<div class="id1"></div>');
+
+	throws(
+		function () { $.toArray(); },
+		TypeError,
+		'Throws type error if no array like object given'
+	);
+
+	var al = { 0: 'a', 1: 'b', length: 2};
+	var a = $.toArray(al);
+	ok(Array.isArray(a), 'Returned value is a javascript array');
+	ok(a[0] === 'a' && a[1] === 'b' && a.length === 2, 'Returned arrays contents match array like objects content');
+});
+
 // iframe/async tests -------------------------------------------------------------
 
 module('simpleQuery CSS');

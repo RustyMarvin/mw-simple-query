@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.2
+ * MW Simple Query, v2.3
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
@@ -81,7 +81,7 @@
 
 		var parent = context && context._n || context || document;
 
-		return Array.prototype.slice.call(parent.querySelectorAll(selector))
+		return this.toArray(parent.querySelectorAll(selector))
 			.map(function (element) {
 				return new ElementWrapper(element);
 			});
@@ -252,6 +252,23 @@
 	};
 
 
+	/**
+	 * Converts an array like object (e.g. a dom node list) to a real javascript array.
+	 * @param {object} arrayLike	An array like object.
+	 * @returns {array}				A javascript array.
+	 *
+	 * @see https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/slice
+	 */
+	var _slice = Function.prototype.call.bind(Array.prototype.slice);
+	simpleQuery.toArray = function(arrayLike) {
+		if (typeof arrayLike === 'object' && 'length' in arrayLike && typeof arrayLike.length === 'number') {
+			return _slice(arrayLike);
+		}
+
+		throw new TypeError('simpleQuery#toArray: Invalid type given!');
+	};
+
+
 	// ▂▂▂▂▂▂▂ Element Wrapper ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 	/**
@@ -367,7 +384,7 @@
 		if (typeof selector !== 'string') {
 			throw new TypeError('simpleQuery#selectAll: Invalid type for selector given!');
 		}
-		return Array.prototype.slice.call(this._n.querySelectorAll(selector))
+		return this.toArray(this._n.querySelectorAll(selector))
 			.map(function (node) {
 				return new ElementWrapper(node);
 			});
@@ -896,7 +913,7 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Element.children
 	 */
 	ElementWrapper.prototype.childElements = function () {
-		return Array.prototype.slice.call(this._n.children)
+		return this.toArray(this._n.children)
 			.map(function (node) {
 				return new ElementWrapper(node);
 			});
