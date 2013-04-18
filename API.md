@@ -1,7 +1,19 @@
 
+<a name="toc"></a>
 # simple query API
 
-* [Methods on the simpleQuery object](#simple-query)
+* [Methods on the simpleQuery object](#simple-query-methods)
+	* [simpleQuery( selector [, context] )](#simple-query)
+	* [.wrap( element )](#simple-query-wrap)
+	* [.all( selector [, context] )](#simple-query-all)
+	* [.create( name )](#simple-query-create)
+	* [.createfragment()](#simple-query-createfragment)
+	* [.addCssFile( path )](#simple-query-addcssfile)
+	* [.addCssRule( rule )](#simple-query-addcssrule)
+	* [.onDOMReady( callback )](#simple-query-ondomready)
+	* [.onLoad( callback )](#simple-query-onload)
+	* [.toType( variable )](#simple-query-totype)
+	* [.toArray( arrayLike )](#simple-query-toarray)
 * [Properties of the wrapped element](#wrapped-element-properties)
 * [Methods on the wrapped element](#wrapped-element-methods)
 
@@ -9,6 +21,7 @@
 <hr>
 
 
+<a name="simple-query-methods"></a>
 ## Methods on the simpleQuery object
 
 <a name="simple-query"></a>
@@ -25,7 +38,10 @@ Selects elements from the DOM and returns a simpleQuery wrapped element.
 
 wraps: [document.querySelector](https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector)
 
+[↑up](#toc)
 
+
+<a name="simple-query-wrap"></a>
 ### simpleQuery.wrap( element )
 
 Wraps the given wrapped element or dom element in a new wrapped element.
@@ -36,7 +52,10 @@ Wraps the given wrapped element or dom element in a new wrapped element.
     var h = simpleQuery('div.header');
     var e = simpleQuery.wrap(h);
 
+[↑up](#toc)
 
+
+<a name="simple-query-all"></a>
 ### simpleQuery.all( selector [, context] )
 
 Selects a list of elements from the dom and returns an array of wrapped elements.
@@ -49,7 +68,10 @@ Selects a list of elements from the dom and returns an array of wrapped elements
 
 wraps: [document.querySelectorAll](https://developer.mozilla.org/en-US/docs/DOM/Document.querySelectorAll)
 
+[↑up](#toc)
 
+
+<a name="simple-query-create"></a>
 ### simpleQuery.create( name )
 
 Returns a wrapped element wrapping a newly created dom element.
@@ -61,7 +83,10 @@ Returns a wrapped element wrapping a newly created dom element.
 
 wraps: [document.createElement](https://developer.mozilla.org/en-US/docs/DOM/document.createElement)
 
+[↑up](#toc)
 
+
+<a name="simple-query-createfragment"></a>
 ### simpleQuery.createFragment()
 
 Returns a wrapped element wrapping a newly created document fragment.
@@ -72,7 +97,10 @@ Returns a wrapped element wrapping a newly created document fragment.
 
 wraps: [document.createDocumentFragment](https://developer.mozilla.org/en-US/docs/DOM/document.createDocumentFragment)
 
+[↑up](#toc)
 
+
+<a name="simple-query-addcssfile"></a>
 ### simpleQuery.addCssFile( path )
 
 Loads a css file by creating a new 'link' element and appending it to the document 'head'.
@@ -84,7 +112,10 @@ Loads a css file by creating a new 'link' element and appending it to the docume
 
 info: [MDN link](https://developer.mozilla.org/en-US/docs/HTML/Element/link)
 
+[↑up](#toc)
 
+
+<a name="simple-query-addcssrule"></a>
 ### simpleQuery.addCssRule( rule )
 
 Creates a new css rule and inserts it into the document.
@@ -96,7 +127,10 @@ Creates a new css rule and inserts it into the document.
 wraps: [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/DOM/CSSStyleSheet/insertRule)  
 info: [MDN dynamic styling](https://developer.mozilla.org/en-US/docs/DOM/Using_dynamic_styling_information)
 
+[↑up](#toc)
 
+
+<a name="simple-query-ondomready"></a>
 ### simpleQuery.onDOMReady( callback )
 
 Adds an event listener to the document 'DOMContentLoaded' event.
@@ -109,7 +143,10 @@ The callback gets called immediately if the DOM is already ready.
 wraps: [Event DOMContentLoaded](https://developer.mozilla.org/en-US/docs/DOM/Mozilla_Event_Reference/DOMContentLoaded)  
 info: [MDN document.readyState](https://developer.mozilla.org/en-US/docs/DOM/document.readyState)
 
+[↑up](#toc)
 
+
+<a name="simple-query-onload"></a>
 ### simpleQuery.onLoad( callback )
 
 Adds an event listener to the document 'load' event.
@@ -122,7 +159,10 @@ The callback gets called immediately if the document is already loaded.
 wraps: [Event load](https://developer.mozilla.org/en-US/docs/Mozilla_event_reference/load)  
 info: [MDN document.readyState](https://developer.mozilla.org/en-US/docs/DOM/document.readyState)
 
+[↑up](#toc)
 
+
+<a name="simple-query-totype"></a>
 ### simpleQuery.toType( variable )
 
 Returns the actual type of the given variable.  
@@ -136,7 +176,10 @@ Returns the actual type of the given variable.
 info: [javascriptweblog.wordpress.com](http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/)  
 info: [perfectionkills.com](http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/)
 
+[↑up](#toc)
 
+
+<a name="simple-query-toarray"></a>
 ### simpleQuery.toArray( arrayLike )
 
 Converts an array like object (e.g. a dom node list) to a real javascript array.
@@ -148,24 +191,34 @@ Converts an array like object (e.g. a dom node list) to a real javascript array.
 
 info: [MDN Array.slice](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/slice)
 
+[↑up](#toc)
+
 
 <a name="wrapped-element-properties"></a>
 ## Properties of the wrapped element returned from simpleQuery methods
+
+[↑up](#toc)
 
 
 ### .node
 
 _{object} readonly_: The wrapped DOM element.
 
+[↑up](#toc)
+
 
 ### .offsetLeft, .offsetTop, .offsetWidth, .offsetHeight
 
 _{number} readonly_: The offset values of the wrapped element.
 
+[↑up](#toc)
+
 
 ### .offsetParent
 
 _{object} readonly_: The offset parent of the wrapped element.
+
+[↑up](#toc)
 
 
 ### .checked
@@ -173,11 +226,15 @@ _{object} readonly_: The offset parent of the wrapped element.
 _{boolean}_: The checked state of the wrapped element.  
 Only usefull for `<input type="radio|checkbox">`.
 
+[↑up](#toc)
+
 
 ### .selected
 
 _{boolean}_: The selected state of the wrapped element.  
 Only usefull for `<option>` elements inside `<select>`.
+
+[↑up](#toc)
 
 
 <a name="wrapped-element-methods"></a>
@@ -196,6 +253,8 @@ Selects a dom element from the tree below this wrapped element and returns a new
 
 wraps: [document.querySelector](https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector)
 
+[↑up](#toc)
+
 
 ### .selectAll( selector )
 
@@ -209,6 +268,8 @@ Returns an array of new wrapped dom elements selected from the dom tree below th
 
 wraps: [document.querySelectorAll](https://developer.mozilla.org/en-US/docs/DOM/Document.querySelectorAll)
 
+[↑up](#toc)
+
 
 ### .sameNode( node )
 
@@ -219,6 +280,8 @@ Checks if this wrapped element refers to the same dom element as the given wrapp
 
     var e = simpleQuery('div.header');
     var b = simpleQuery('div.header').sameNode(e); // b contains true
+
+[↑up](#toc)
 
 
 ### .attrib( name [, value] )
@@ -243,6 +306,8 @@ Sets an attribute value on the wrapped element.
 wraps: [element.getAttribute](https://developer.mozilla.org/en-US/docs/DOM/element.getAttribute)  
 wraps: [element.setAttribute](https://developer.mozilla.org/en-US/docs/DOM/element.setAttribute)
 
+[↑up](#toc)
+
 
 ### .hasAttrib( name )
 
@@ -255,6 +320,8 @@ Tests if an attribute exists on the wrapped element.
 
 wraps: [element.hasAttribute](https://developer.mozilla.org/en-US/docs/DOM/element.hasAttribute)
 
+[↑up](#toc)
+
 
 ### .removeAttrib( name )
 
@@ -266,6 +333,8 @@ Removes an attribute from the wrapped element.
     simpleQuery('div.header').removeAttrib('title');
 
 wraps: [element.removeAttribute](https://developer.mozilla.org/en-US/docs/DOM/element.removeAttribute)
+
+[↑up](#toc)
 
 
 ### .value( [value] )
@@ -288,6 +357,8 @@ Sets an input elements value on the wrapped element.
 
 info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/Input)
 
+[↑up](#toc)
+
 
 ### .checkValidity()
 
@@ -299,6 +370,8 @@ Checks if the wrapped input element constrains are satisfied.
 
 info: [MDN Constraint_Validation](https://developer.mozilla.org/en-US/docs/HTML/HTML5/Forms_in_HTML5#Constraint_Validation)
 
+[↑up](#toc)
+
 
 ### .focus()
 
@@ -308,6 +381,8 @@ Sets the input focus on the wrapped element.
 
 info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/Input)
 
+[↑up](#toc)
+
 
 ### .blur()
 
@@ -316,6 +391,8 @@ Removes the input focus from the wrapped element.
 **returns** _{object}_: The wrapped element.
 
 info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/Input)
+
+[↑up](#toc)
 
 
 ### .disabled( [status] )
@@ -337,6 +414,8 @@ Sets the 'disabled' attribute of the wrapped element.
 
 info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/Input)
 
+[↑up](#toc)
+
 
 ### .offset()
 
@@ -351,6 +430,8 @@ offset object: { left: _{number}_, top: _{number}_, width: _{number}_, height: _
 
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
 
+[↑up](#toc)
+
 
 ### .width( value ) / .height( value )
 
@@ -362,6 +443,8 @@ Sets the width/height of the wrapped element by setting .style.width/.height.
     simpleQuery('div.header').width(200).height(50);
 
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
+
+[↑up](#toc)
 
 
 ### .position( left, top )
@@ -375,6 +458,8 @@ Sets the position of this wrapped element by setting .style.left/.top.
     simpleQuery('div.header').position(200, 100);
 
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
+
+[↑up](#toc)
 
 
 ### .data( [key] [, value] )
@@ -418,6 +503,8 @@ Sets data key/value pairs given as object on the wrapped element.
 
 wraps: [element.dataset](https://developer.mozilla.org/en-US/docs/DOM/element.dataset)
 
+[↑up](#toc)
+
 
 ### .style( name [, value] ) / .style( obj )
 
@@ -449,6 +536,8 @@ Sets style name/value pairs given as object on the wrapped element.
 info: [MDN window.getComputedStyle](https://developer.mozilla.org/en-US/docs/DOM/window.getComputedStyle)
 info: [MDN element.style](https://developer.mozilla.org/en-US/docs/DOM/element.style)
 
+[↑up](#toc)
+
 
 ### .setClass( name )
 
@@ -460,6 +549,8 @@ Sets the class attribute to the given name of the wrapped element.
 	simpleQuery('div.header').setClass('myClass');
 
 wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.className)
+
+[↑up](#toc)
 
 
 ### .addClass( name ) / .removeClass( name )
@@ -474,6 +565,8 @@ Adds/removes a class to/from the list of classes of the wrapped element.
 
 wraps: [element.classList](https://developer.mozilla.org/en-US/docs/DOM/element.classList)
 
+[↑up](#toc)
+
 
 ### .toggleClass( name )
 
@@ -486,6 +579,8 @@ Toggle the existance of a class in the list of classes of the wrapped element.
 
 wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.className)
 
+[↑up](#toc)
+
 
 ### .containsClass( name )
 
@@ -497,6 +592,8 @@ Checks if the wrapped elements list of classes contains the class.
 	var h = simpleQuery('div.header').containsClass('myClass');
 
 wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.className)
+
+[↑up](#toc)
 
 
 ### .text( [content] )
@@ -518,6 +615,8 @@ Sets the text content of the wrapped element.
 
 wraps: [Node.textContent](https://developer.mozilla.org/en-US/docs/DOM/Node.textContent)
 
+[↑up](#toc)
+
 
 ### .html ( [content] )
 
@@ -538,6 +637,8 @@ Sets the html content of the wrapped element.
 
 wraps: [element.innerHTML](https://developer.mozilla.org/en-US/docs/DOM/element.innerHTML)
 
+[↑up](#toc)
+
 
 ### .empty()
 
@@ -547,6 +648,8 @@ Note: Does NOT remove attached event handlers.
 **returns** _{object}_: The wrapped element.
 
 	simpleQuery('div.header').empty();
+
+[↑up](#toc)
 
 
 ### .childNode( index )
@@ -561,6 +664,8 @@ wraps: [Node.childNodes](https://developer.mozilla.org/en-US/docs/DOM/Node.child
 
 	var c = simpleQuery('div.header').childNode(0);
 
+[↑up](#toc)
+
 
 ### .childElement( index )
 
@@ -574,6 +679,8 @@ Note: Child elements do not include any text node, only html element nodes.
 
 wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.children)
 
+[↑up](#toc)
+
 
 ### .childElements()
 
@@ -586,6 +693,8 @@ Note: Child elements do not include any text node, only html element nodes.
 
 wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.children)
 
+[↑up](#toc)
+
 
 ### .removeChild( node )
 
@@ -596,6 +705,8 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 	h.removeChild(h.select('span.message'));
 
 wraps: [Node.removeChild](https://developer.mozilla.org/de/docs/DOM/Node.removeChild)
+
+[↑up](#toc)
 
 
 ### .append( content )
@@ -610,6 +721,8 @@ Appends the given html/wrapped element/dom node to the end of the wrapped elemen
 wraps: [Node.appendChild](https://developer.mozilla.org/en-US/docs/DOM/Node.appendChild)  
 wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM/element.insertAdjacentHTML)
 
+[↑up](#toc)
+
 
 ### .prepend( content )
 
@@ -622,6 +735,8 @@ Prepends the given html/wrapped element/dom node to the front of the wrapped ele
 
 wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.insertBefore)  
 wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM/element.insertAdjacentHTML)
+
+[↑up](#toc)
 
 
 ### .insertBefore( insertNode, refNode)
@@ -641,6 +756,8 @@ before the given reference wrapped element/dom node.
 
 wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.insertBefore)
 
+[↑up](#toc)
+
 
 ### .cleanup()
 
@@ -654,6 +771,8 @@ Useful to minimize the number of nodes in the dom tree for faster dom traversal.
 
 info: [Node.nodeType](https://developer.mozilla.org/en/docs/DOM/Node.nodeType)
 
+[↑up](#toc)
+
 
 ### .hide( [display] )
 
@@ -664,12 +783,16 @@ Hides the wrapped element by setting style.display to 'none'.
 
 	simpleQuery('div.header').hide();
 
+[↑up](#toc)
+
 
 ### .show()
 
 Shows/unhides the wrapped element by restoring style.display to the previous state.
 
 **returns** _{object}_: The wrapped element.
+
+[↑up](#toc)
 
 
 ### .onClick( handler )
@@ -685,6 +808,8 @@ The handler gets the event object as parameter.
 
 wraps: [element.addEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener)  
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)  
+
+[↑up](#toc)
 
 
 ### .onEvent( name, handler )
@@ -702,6 +827,8 @@ The handler gets the event object as parameter.
 wraps: [element.addEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener)  
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)  
 
+[↑up](#toc)
+
 
 ### .triggerClick()
 
@@ -713,6 +840,8 @@ Triggers a 'click' event on the wrapped element.
 
 wraps: [document.createEvent](https://developer.mozilla.org/en-US/docs/DOM/document.createEvent)  
 wraps: [element.dispatchEvent](https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent)
+
+[↑up](#toc)
 
 
 ### .onMouseenter( handler ) / .onMouseleave( handler )
@@ -729,4 +858,6 @@ Note: Actually a 'mouseover'/'mouseout' event listener is attached and 'mouseent
 
 info: [www.quirksmode.org](http://www.quirksmode.org/js/events_mouse.html#mouseover)  
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
+
+[↑up](#toc)
 
