@@ -24,6 +24,46 @@
 	* [.checked](#wrapped-element-checked)
 	* [.selected](#wrapped-element-selected)
 * [Methods on the wrapped element](#wrapped-element-methods)
+	* [.select( selector )](#wrapped-element-select)
+	* [.selectAll( selector )](#wrapped-element-selectall)
+	* [.sameNode( node )](#wrapped-element-samenode)
+	* [.attrib( name [, value] )](#wrapped-element-attrib)
+	* [.hasAttrib( name )](#wrapped-element-hasattrib)
+	* [.removeAttrib( name )](#wrapped-element-removeattrib)
+	* [.value( [value] )](#wrapped-element-value)
+	* [.checkValidity()](#wrapped-element-checkvalidity)
+	* [.focus()](#wrapped-element-focus)
+	* [.blur()](#wrapped-element-blur)
+	* [.disabled( [status] )](#wrapped-element-disabled)
+	* [.offset()](#wrapped-element-offset)
+	* [.width( value )](#wrapped-element-widthheight)
+	* [.height( value )](#wrapped-element-widthheight)
+	* [.position( left, top )](#wrapped-element-position)
+	* [.data( [key] [, value] )](#wrapped-element-data)
+	* [.style( name [, value] ) / .style( obj )](#wrapped-element-style)
+	* [.setClass( name )](#wrapped-element-setclass)
+	* [.addClass( name )](#wrapped-element-setclass)
+	* [.removeClass( name )](#wrapped-element-addclass)
+	* [.toggleClass( name )](#wrapped-element-toggleclass)
+	* [.containsClass( name )](#wrapped-element-containsclass)
+	* [.text( [content] )](#wrapped-element-text)
+	* [.html ( [content] )](#wrapped-element-html)
+	* [.empty()](#wrapped-element-empty)
+	* [.childNode( index )](#wrapped-element-childnode)
+	* [.childElement( index )](#wrapped-element-childelement)
+	* [.childElements()](#wrapped-element-childelements)
+	* [.removeChild( node )](#wrapped-element-removechild)
+	* [.append( content )](#wrapped-element-append)
+	* [.prepend( content )](#wrapped-element-prepend)
+	* [.insertBefore( insertNode, refNode)](#wrapped-element-insertbefore)
+	* [.cleanup()](#wrapped-element-cleanup)
+	* [.hide( [display] )](#wrapped-element-hide)
+	* [.show()](#wrapped-element-show)
+	* [.onClick( handler )](#wrapped-element-onclick)
+	* [.onEvent( name, handler )](#wrapped-element-onevent)
+	* [.triggerClick()](#wrapped-element-triggerclick)
+	* [.onMouseenter( handler )](#wrapped-element-onmouseenterleave)
+	* [.onMouseleave( handler )](#wrapped-element-onmouseenterleave)
 
 
 <hr>
@@ -253,6 +293,7 @@ Only usefull for `<option>` elements inside `<select>`.
 ## Methods on the wrapped element returned from simpleQuery methods
 
 
+</a><a name="wrapped-element-select"></a>
 ### .select( selector )
 
 Selects a dom element from the tree below this wrapped element and returns a new wrapped dom element, similar to `simpleQuery( selector [, context] )`.
@@ -267,7 +308,7 @@ wraps: [document.querySelector](https://developer.mozilla.org/en-US/docs/DOM/Doc
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-selectall"></a>
 ### .selectAll( selector )
 
 Returns an array of new wrapped dom elements selected from the dom tree below this this wrapped element, similar to `simpleQuery.all( selector [, context] )`.
@@ -282,7 +323,7 @@ wraps: [document.querySelectorAll](https://developer.mozilla.org/en-US/docs/DOM/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-samenode"></a>
 ### .sameNode( node )
 
 Checks if this wrapped element refers to the same dom element as the given wrapped element.
@@ -295,7 +336,7 @@ Checks if this wrapped element refers to the same dom element as the given wrapp
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-attrib"></a>
 ### .attrib( name [, value] )
 
 **.attrib(name)**  
@@ -320,7 +361,7 @@ wraps: [element.setAttribute](https://developer.mozilla.org/en-US/docs/DOM/eleme
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-hasattrib"></a>
 ### .hasAttrib( name )
 
 Tests if an attribute exists on the wrapped element.
@@ -334,7 +375,7 @@ wraps: [element.hasAttribute](https://developer.mozilla.org/en-US/docs/DOM/eleme
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-removeattrib"></a>
 ### .removeAttrib( name )
 
 Removes an attribute from the wrapped element.
@@ -348,7 +389,7 @@ wraps: [element.removeAttribute](https://developer.mozilla.org/en-US/docs/DOM/el
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-value"></a>
 ### .value( [value] )
 
 
@@ -371,7 +412,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-checkvalidity"></a>
 ### .checkValidity()
 
 Checks if the wrapped input element constrains are satisfied.
@@ -384,7 +425,7 @@ info: [MDN Constraint_Validation](https://developer.mozilla.org/en-US/docs/HTML/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-focus"></a>
 ### .focus()
 
 Sets the input focus on the wrapped element.
@@ -395,7 +436,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-blur"></a>
 ### .blur()
 
 Removes the input focus from the wrapped element.
@@ -406,7 +447,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-disabled"></a>
 ### .disabled( [status] )
 
 **.disabled()**  
@@ -428,7 +469,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-offset"></a>
 ### .offset()
 
 Get all offset values as object from the wrapped element:  
@@ -444,7 +485,7 @@ info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determin
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-widthheight"></a>
 ### .width( value ) / .height( value )
 
 Sets the width/height of the wrapped element by setting .style.width/.height.
@@ -458,7 +499,7 @@ info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determin
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-position"></a>
 ### .position( left, top )
 
 Sets the position of this wrapped element by setting .style.left/.top.
@@ -473,7 +514,7 @@ info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determin
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-data"></a>
 ### .data( [key] [, value] )
 
 Gets/sets user data on the wrapped element by using the element.dataset methods.  
@@ -517,7 +558,7 @@ wraps: [element.dataset](https://developer.mozilla.org/en-US/docs/DOM/element.da
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-style"></a>
 ### .style( name [, value] ) / .style( obj )
 
 **.style(name)**  
@@ -550,7 +591,7 @@ info: [MDN element.style](https://developer.mozilla.org/en-US/docs/DOM/element.s
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-setclass"></a>
 ### .setClass( name )
 
 Sets the class attribute to the given name of the wrapped element.
@@ -564,7 +605,7 @@ wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-addclass"></a>
 ### .addClass( name ) / .removeClass( name )
 
 Adds/removes a class to/from the list of classes of the wrapped element.
@@ -579,7 +620,7 @@ wraps: [element.classList](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-toggleclass"></a>
 ### .toggleClass( name )
 
 Toggle the existance of a class in the list of classes of the wrapped element.
@@ -593,7 +634,7 @@ wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-containsclass"></a>
 ### .containsClass( name )
 
 Checks if the wrapped elements list of classes contains the class.
@@ -607,7 +648,7 @@ wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-text"></a>
 ### .text( [content] )
 
 **.text()**  
@@ -629,7 +670,7 @@ wraps: [Node.textContent](https://developer.mozilla.org/en-US/docs/DOM/Node.text
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-html"></a>
 ### .html ( [content] )
 
 **.html()**  
@@ -651,7 +692,7 @@ wraps: [element.innerHTML](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-empty"></a>
 ### .empty()
 
 Deletes all child elements from the wrapped element.  
@@ -663,7 +704,7 @@ Note: Does NOT remove attached event handlers.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-childnode"></a>
 ### .childNode( index )
 
 Returns the wrapped elements child node by index.  
@@ -678,7 +719,7 @@ wraps: [Node.childNodes](https://developer.mozilla.org/en-US/docs/DOM/Node.child
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-childelement"></a>
 ### .childElement( index )
 
 Returns the wrapped elements child element by index.  
@@ -693,7 +734,7 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-childelements"></a>
 ### .childElements()
 
 Returns the wrapped elements child elements as array of wrapped elements.  
@@ -707,7 +748,7 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-removechild"></a>
 ### .removeChild( node )
 
 **node** _{object}_: The child node to remove, given as wrapped element or dom element.  
@@ -720,7 +761,7 @@ wraps: [Node.removeChild](https://developer.mozilla.org/de/docs/DOM/Node.removeC
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-append"></a>
 ### .append( content )
 
 Appends the given html/wrapped element/dom node to the end of the wrapped element child nodes list.
@@ -735,7 +776,7 @@ wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-prepend"></a>
 ### .prepend( content )
 
 Prepends the given html/wrapped element/dom node to the front of the wrapped element child nodes list.
@@ -750,7 +791,7 @@ wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-insertbefore"></a>
 ### .insertBefore( insertNode, refNode)
 
 Inserts the given wrapped element/dom node into this wrapped elements childs,  
@@ -770,7 +811,7 @@ wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.ins
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-cleanup"></a>
 ### .cleanup()
 
 Recursively removes empty text nodes (e.g. linebreaks) and comment nodes from the dom tree below the wrapped element,  
@@ -785,7 +826,7 @@ info: [Node.nodeType](https://developer.mozilla.org/en/docs/DOM/Node.nodeType)
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-hide"></a>
 ### .hide( [display] )
 
 Hides the wrapped element by setting style.display to 'none'.
@@ -797,7 +838,7 @@ Hides the wrapped element by setting style.display to 'none'.
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-show"></a>
 ### .show()
 
 Shows/unhides the wrapped element by restoring style.display to the previous state.
@@ -806,7 +847,7 @@ Shows/unhides the wrapped element by restoring style.display to the previous sta
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-onclick"></a>
 ### .onClick( handler )
 
 Adds a 'click' event listener to the wrapped element.  
@@ -823,7 +864,7 @@ info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-onevent"></a>
 ### .onEvent( name, handler )
 
 Adds an event listener to the wrapped element.  
@@ -841,7 +882,7 @@ info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-triggerclick"></a>
 ### .triggerClick()
 
 Triggers a 'click' event on the wrapped element.
@@ -855,7 +896,7 @@ wraps: [element.dispatchEvent](https://developer.mozilla.org/en-US/docs/DOM/elem
 
 [↑up](#toc)
 
-
+<a name="wrapped-element-onmouseenterleave"></a>
 ### .onMouseenter( handler ) / .onMouseleave( handler )
 
 Adds a 'mouseenter'/'mouseleave' event listener to the wrapped element.  
