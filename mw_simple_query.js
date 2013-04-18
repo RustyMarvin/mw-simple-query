@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.3
+ * MW Simple Query, v2.4
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
@@ -1000,6 +1000,46 @@
 		}
 
 		this._n.insertBefore(insertNode._n || insertNode, refNode._n || refNode);
+
+		return this;
+	};
+
+	/**
+	 * Recursively removes empty text nodes (e.g. linebreaks) and comment nodes
+	 * from the dom tree below this wrapped element,
+	 * with the exception of text nodes containing only non-breaking space '&nbsp;' resp. '\u00A0'.
+	 * Useful to minimize the number of nodes in the dom tree for faster dom traversal.
+	 * @returns {object}		This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en/docs/DOM/Node.nodeType
+	 */
+	var _cleanupRE = /[\r\n\t ]+/g;
+	var _cleanupTree = function (node) {
+		var i, n;
+
+		for (i = node.childNodes.length; i--;) {
+			n = node.childNodes[i];
+			switch (n.nodeType) {
+			case Node.COMMENT_NODE:
+				n.parentNode.removeChild(n);
+				break;
+			case Node.TEXT_NODE:
+				if (n.textContent.replace(_cleanupRE, '') === '') {
+					n.parentNode.removeChild(n);
+				}
+				break;
+			case Node.ELEMENT_NODE:
+				if (n.childNodes.length > 0) {
+					_cleanupTree(n);
+				}
+				break;
+			}
+		}
+	};
+	ElementWrapper.prototype.cleanup = function () {
+		if (this._n.childNodes.length > 0) {
+			_cleanupTree(this._n);
+		}
 
 		return this;
 	};

@@ -761,6 +761,18 @@ test('#insertBefore', function () {
 	ok(n.innerHTML === '<span>First</span><p>Text4</p><span>Second</span>', 'Insert wrapped element before wrapped element ok');
 });
 
+test('#cleanup', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1">\n<!-- comment --><span>text</span>\n<span>&nbsp;</span>\n</div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	$e.cleanup();
+	ok(n.childNodes.length === 2, 'Cleaned up elements child count ok.');
+	ok(n.innerHTML === '<span>text</span><span>&nbsp;</span>', 'Cleaned up elements content ok.');
+});
+
 module('Wrapped Element Visibility');
 
 test('#show / #hide', function () {

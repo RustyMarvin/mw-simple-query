@@ -630,6 +630,19 @@ before the given reference wrapped element/dom node.
 wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.insertBefore)
 
 
+### .cleanup()
+
+Recursively removes empty text nodes (e.g. linebreaks) and comment nodes from the dom tree below the wrapped element,  
+with the exception of text nodes containing only non-breaking space `&nbsp;` resp. `'\u00A0'`.  
+Useful to minimize the number of nodes in the dom tree for faster dom traversal.
+
+**returns** _{object}_: The wrapped element.
+
+	simpleQuery('body').cleanup();
+
+info: [Node.nodeType](https://developer.mozilla.org/en/docs/DOM/Node.nodeType)
+
+
 ### .hide( [display] )
 
 Hides the wrapped element by setting style.display to 'none'.
