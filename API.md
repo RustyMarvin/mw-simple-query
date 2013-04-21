@@ -60,7 +60,10 @@
 	* [.hide( [display] )](#wrapped-element-hide)
 	* [.show()](#wrapped-element-show)
 	* [.onClick( handler )](#wrapped-element-onclick)
+	* [.offClick( [handler] )](#wrapped-element-offclick)
 	* [.onEvent( name, handler )](#wrapped-element-onevent)
+	* [.offEvent( [name] [, handler] )](#wrapped-element-offevent)
+	* [.eventCount( [name] [, handler] )](#wrapped-element-eventcount)
 	* [.triggerClick()](#wrapped-element-triggerclick)
 	* [.onMouseenter( handler )](#wrapped-element-onmouseenterleave)
 	* [.onMouseleave( handler )](#wrapped-element-onmouseenterleave)
@@ -308,6 +311,7 @@ wraps: [document.querySelector](https://developer.mozilla.org/en-US/docs/DOM/Doc
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-selectall"></a>
 ### .selectAll( selector )
 
@@ -323,6 +327,7 @@ wraps: [document.querySelectorAll](https://developer.mozilla.org/en-US/docs/DOM/
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-samenode"></a>
 ### .sameNode( node )
 
@@ -335,6 +340,7 @@ Checks if this wrapped element refers to the same dom element as the given wrapp
     var b = simpleQuery('div.header').sameNode(e); // b contains true
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-attrib"></a>
 ### .attrib( name [, value] )
@@ -361,6 +367,7 @@ wraps: [element.setAttribute](https://developer.mozilla.org/en-US/docs/DOM/eleme
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-hasattrib"></a>
 ### .hasAttrib( name )
 
@@ -375,6 +382,7 @@ wraps: [element.hasAttribute](https://developer.mozilla.org/en-US/docs/DOM/eleme
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-removeattrib"></a>
 ### .removeAttrib( name )
 
@@ -388,6 +396,7 @@ Removes an attribute from the wrapped element.
 wraps: [element.removeAttribute](https://developer.mozilla.org/en-US/docs/DOM/element.removeAttribute)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-value"></a>
 ### .value( [value] )
@@ -412,6 +421,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-checkvalidity"></a>
 ### .checkValidity()
 
@@ -425,6 +435,7 @@ info: [MDN Constraint_Validation](https://developer.mozilla.org/en-US/docs/HTML/
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-focus"></a>
 ### .focus()
 
@@ -436,6 +447,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-blur"></a>
 ### .blur()
 
@@ -446,6 +458,7 @@ Removes the input focus from the wrapped element.
 info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/Input)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-disabled"></a>
 ### .disabled( [status] )
@@ -469,6 +482,7 @@ info: [MDN input element](https://developer.mozilla.org/en-US/docs/HTML/Element/
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-offset"></a>
 ### .offset()
 
@@ -485,6 +499,7 @@ info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determin
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-widthheight"></a>
 ### .width( value ) / .height( value )
 
@@ -498,6 +513,7 @@ Sets the width/height of the wrapped element by setting .style.width/.height.
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-position"></a>
 ### .position( left, top )
@@ -513,6 +529,7 @@ Sets the position of this wrapped element by setting .style.left/.top.
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-data"></a>
 ### .data( [key] [, value] )
@@ -558,6 +575,7 @@ wraps: [element.dataset](https://developer.mozilla.org/en-US/docs/DOM/element.da
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-style"></a>
 ### .style( name [, value] ) / .style( obj )
 
@@ -591,6 +609,7 @@ info: [MDN element.style](https://developer.mozilla.org/en-US/docs/DOM/element.s
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-setclass"></a>
 ### .setClass( name )
 
@@ -604,6 +623,7 @@ Sets the class attribute to the given name of the wrapped element.
 wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.className)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-addclass"></a>
 ### .addClass( name ) / .removeClass( name )
@@ -620,6 +640,7 @@ wraps: [element.classList](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-toggleclass"></a>
 ### .toggleClass( name )
 
@@ -634,6 +655,7 @@ wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-containsclass"></a>
 ### .containsClass( name )
 
@@ -647,6 +669,7 @@ Checks if the wrapped elements list of classes contains the class.
 wraps: [element.className](https://developer.mozilla.org/en-US/docs/DOM/element.className)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-text"></a>
 ### .text( [content] )
@@ -670,6 +693,7 @@ wraps: [Node.textContent](https://developer.mozilla.org/en-US/docs/DOM/Node.text
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-html"></a>
 ### .html ( [content] )
 
@@ -692,6 +716,7 @@ wraps: [element.innerHTML](https://developer.mozilla.org/en-US/docs/DOM/element.
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-empty"></a>
 ### .empty()
 
@@ -703,6 +728,7 @@ Note: Does NOT remove attached event handlers.
 	simpleQuery('div.header').empty();
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-childnode"></a>
 ### .childNode( index )
@@ -719,6 +745,7 @@ wraps: [Node.childNodes](https://developer.mozilla.org/en-US/docs/DOM/Node.child
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-childelement"></a>
 ### .childElement( index )
 
@@ -734,6 +761,7 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-childelements"></a>
 ### .childElements()
 
@@ -748,6 +776,7 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-removechild"></a>
 ### .removeChild( node )
 
@@ -760,6 +789,7 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 wraps: [Node.removeChild](https://developer.mozilla.org/de/docs/DOM/Node.removeChild)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-append"></a>
 ### .append( content )
@@ -776,6 +806,7 @@ wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-prepend"></a>
 ### .prepend( content )
 
@@ -790,6 +821,7 @@ wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.ins
 wraps: [element.insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/DOM/element.insertAdjacentHTML)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-insertbefore"></a>
 ### .insertBefore( insertNode, refNode)
@@ -811,6 +843,7 @@ wraps: [Node.insertBefore](https://developer.mozilla.org/en-US/docs/DOM/Node.ins
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-cleanup"></a>
 ### .cleanup()
 
@@ -826,6 +859,7 @@ info: [Node.nodeType](https://developer.mozilla.org/en/docs/DOM/Node.nodeType)
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-hide"></a>
 ### .hide( [display] )
 
@@ -838,6 +872,7 @@ Hides the wrapped element by setting style.display to 'none'.
 
 [↑up](#toc)
 
+
 <a name="wrapped-element-show"></a>
 ### .show()
 
@@ -846,6 +881,7 @@ Shows/unhides the wrapped element by restoring style.display to the previous sta
 **returns** _{object}_: The wrapped element.
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-onclick"></a>
 ### .onClick( handler )
@@ -863,6 +899,25 @@ wraps: [element.addEventListener](https://developer.mozilla.org/en-US/docs/DOM/e
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)  
 
 [↑up](#toc)
+
+
+<a name="wrapped-element-offclick"></a>
+### .offClick( [handler] )
+
+Removes a 'click' event listener from the wrapped element.  
+If no handler given, any 'click' event is removed.  
+Note: can only remove events that are attached by this library
+
+**handler** _{function}_: Optional, the 'click' event handler.  
+**returns** _{object}_: The wrapped element.
+
+	simpleQuery('div.header').offClick(); // any 'click' handler is removed
+
+wraps: [element.removeEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener)  
+info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
+
+[↑up](#toc)
+
 
 <a name="wrapped-element-onevent"></a>
 ### .onEvent( name, handler )
@@ -882,6 +937,44 @@ info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
 
 [↑up](#toc)
 
+
+<a name="wrapped-element-offevent"></a>
+### .offEvent( [name] [, handler] )
+
+Removes an event listener from the wrapped element.  
+If no handler given, any event 'name' is removed.  
+If no name given, any event is removed.  
+Note: can only remove events that are attached by this library
+
+**name** _{string}_: Optional, the event name.  
+**handler** _{function}_: Optional, the event handler.  
+**returns** _{object}_: The wrapped element.
+
+	simpleQuery('div.header').offEvent(); // any event handler is removed
+
+wraps: [element.removeEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener)  
+info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)  
+
+[↑up](#toc)
+
+
+<a name="wrapped-element-eventcount"></a>
+### .eventCount( [name] [, handler] )
+
+Counts all events attached to the wrapped element.  
+If no handler given, any event 'name' is counted.  
+If no name given, all events are counted.  
+Note: can only count events that are attached by this library
+
+**name** _{string}_: Optional, the event name.  
+**handler** _{function}_: Optional, the event handler.  
+**returns** _{number}_: The number of attached events.
+
+	var c = simpleQuery('div.header').eventCount();
+
+[↑up](#toc)
+
+
 <a name="wrapped-element-triggerclick"></a>
 ### .triggerClick()
 
@@ -895,6 +988,7 @@ wraps: [document.createEvent](https://developer.mozilla.org/en-US/docs/DOM/docum
 wraps: [element.dispatchEvent](https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent)
 
 [↑up](#toc)
+
 
 <a name="wrapped-element-onmouseenterleave"></a>
 ### .onMouseenter( handler ) / .onMouseleave( handler )
