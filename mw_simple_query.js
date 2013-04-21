@@ -1163,12 +1163,48 @@
 			throw new TypeError('simpleQuery#onEvent: Invalid type for handler given!');
 		}
 
+		this._events.push({
+			name: name,
+			handler: handler
+		});
 		this._n.addEventListener(name, handler, false);
 
 		return this;
 	};
 
-// TODO: offEvent([name] [, handler]);
+	/**
+	 * Removes an event listener from this wrapped element.
+	 * If no handler given, any event 'name' is removed.
+	 * If no name given, any event is removed.
+	 * Note: can only remove events that are attached by this library
+	 * @param {string} [name]		The event name.
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper.prototype.offEvent = function (name, handler) {
+		if (name !== undefined && typeof name !== 'string') {
+			throw new TypeError('simpleQuery#offEvent: Invalid type for name given!');
+		}
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#offEvent: Invalid type for handler given!');
+		}
+
+		var i,
+			event;
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if ((name === undefined || event.name === name) && (handler === undefined || event.handler === handler)) {
+				this._events.splice(i, 1);
+				this._n.removeEventListener(event.name, event.handler, false);
+			}
+		}
+
+		return this;
+	};
 
 // TODO: eventCount([name] [, handler])
 
