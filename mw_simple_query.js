@@ -1206,7 +1206,36 @@
 		return this;
 	};
 
-// TODO: eventCount([name] [, handler])
+	/**
+	 * Counts all events attached to this wrapped element.
+	 * If no handler given, any event 'name' is counted.
+	 * If no name given, all events are counted.
+	 * Note: can only count events that are attached by this library
+	 * @param {string} [name]		The event name.
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 */
+	ElementWrapper.prototype.eventCount = function (name, handler) {
+		if (name !== undefined && typeof name !== 'string') {
+			throw new TypeError('simpleQuery#eventCount: Invalid type for name given!');
+		}
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#eventCount: Invalid type for handler given!');
+		}
+
+		var i,
+			event,
+			count = 0;
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if ((name === undefined || event.name === name) && (handler === undefined || event.handler === handler)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	};
 
 	/**
 	 * Triggers a 'click' event on this wrapped element.

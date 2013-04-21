@@ -1039,7 +1039,41 @@ test('#offEvent', function () {
 	ok(counterA === 0 && counterB === 0 && counterC === 0, 'All event handler removed from dom element');
 });
 
-// TODO: eventCount([name] [, handler])
+test('#eventCount', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1">Text Content</div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.eventCount(null, function () {}); },
+		TypeError,
+		'Throws type error if event name is not a string'
+	);
+	throws(
+		function () { $e.eventCount('click', null); },
+		TypeError,
+		'Throws type error if handler is not a function'
+	);
+
+	var counterA = 0,
+		counterB = 0,
+		counterC = 0;
+	var handlerA = function (event) { counterA += 1; },
+		handlerB = function (event) { counterB += 1; },
+		handlerC = function (event) { counterC += 1; };
+
+	$e.onEvent('click', handlerA);
+	$e.onEvent('click', handlerB);
+	$e.onEvent('mouseover', handlerC);
+
+	ok($e.eventCount('click', handlerA) === 1, 'Event count by name/handler ok');
+	ok($e.eventCount('click') === 2, 'Event count by name ok');
+	ok($e.eventCount() === 3, 'All events count ok');
+
+	$e.offEvent();
+});
 
 test('#triggerClick', function () {
 	var $ = window.simpleQuery;
