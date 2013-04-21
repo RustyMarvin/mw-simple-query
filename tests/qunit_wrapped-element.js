@@ -858,6 +858,73 @@ test('#onClick', function () {
 	ok(clicked === 1, 'Event \'click\' removed');
 });
 
+test('#offClick', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1">Text Content</div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.onClick(); },
+		TypeError,
+		'Throws type error if handler is not a function'
+	);
+
+	var handlerA = function (event) { clickedA += 1; },
+		handlerB = function (event) { clickedB += 1; };
+	var clickedA,
+		clickedB;
+	var okA,
+		okB;
+
+	// add/remove single handler
+	clickedA = 0;
+	$e.onClick(handlerA);
+	triggerEvent('click', $e.node);
+	ok($e._events[0].name === 'click' && $e._events[0].handler === handlerA, 'Event handler \'click\' internally stored in wrapped element');
+
+	$e.offClick(handlerA);
+	ok($e._events.length === 0, 'Event handler \'click\' internally removed from wrapped element');
+
+	triggerEvent('click', $e.node);
+	ok(clickedA === 1, 'Event handler \'click\' removed from dom element');
+
+	// add/remove multiple handlers
+	clickedA = 0;
+	clickedB = 0;
+	$e.onClick(handlerA);
+	$e.onClick(handlerB);
+	triggerEvent('click', $e.node);
+	okA = $e._events[0].name === 'click' && $e._events[0].handler === handlerA;
+	okB = $e._events[1].name === 'click' && $e._events[1].handler === handlerB;
+	ok(okA && okB, 'Event handler A+B \'click\' internally stored in wrapped element');
+
+	$e.offClick(handlerA);
+	okB = $e._events[0].name === 'click' && $e._events[0].handler === handlerB;
+	ok(okB && $e._events.length === 1, 'Event handler A \'click\' internally removed from wrapped element, B left');
+
+	$e.offClick(handlerB);
+	ok($e._events.length === 0, 'Event handler B \'click\' internally removed from wrapped element');
+
+	triggerEvent('click', $e.node);
+	ok(clickedA === 1 && clickedB === 1, 'Event handler A+B \'click\' removed from dom element');
+
+	// add/remove all handlers
+	clickedA = 0;
+	clickedB = 0;
+	$e.onClick(handlerA);
+	$e.onClick(handlerB);
+	triggerEvent('click', $e.node);
+
+	$e.offClick();
+	ok($e._events.length === 0, 'All event handler \'click\' internally removed from wrapped element');
+
+	triggerEvent('click', $e.node);
+	ok(clickedA === 1 && clickedB === 1, 'All event handler \'click\' removed from dom element');
+
+});
+
 test('#onEvent', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="id1">Text Content</div>');
@@ -895,6 +962,10 @@ test('#onEvent', function () {
 	triggerEvent('click', $e.node);
 	ok(clicked === 1, 'Event \'click\' removed');
 });
+
+// TODO: offEvent([name] [, handler])
+
+// TODO: eventCount([name] [, handler])
 
 test('#triggerClick', function () {
 	var $ = window.simpleQuery;

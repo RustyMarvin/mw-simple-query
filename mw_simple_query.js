@@ -291,6 +291,7 @@
 	 */
 	ElementWrapper = function (selectorOrNode, context) {
 		this._oldDisplay = '';
+		this._events = [];
 
 		this._n = (typeof selectorOrNode === 'string') ?
 			(context && context._n || context || document).querySelector(selectorOrNode) :
@@ -1105,7 +1106,40 @@
 			throw new TypeError('simpleQuery#onClick: Invalid type for handler given!');
 		}
 
+		this._events.push({
+			name: 'click',
+			handler: handler
+		});
 		this._n.addEventListener('click', handler, false);
+
+		return this;
+	};
+
+	/**
+	 * Removes a 'click' event listener from this wrapped element.
+	 * If no handler given, any 'click' event is removed.
+	 * Note: can only remove events that are attached by this library
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper.prototype.offClick = function (handler) {
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#offClick: Invalid type for handler given!');
+		}
+
+		var i,
+			event;
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if (event.name === 'click' && (handler === undefined || event.handler === handler)) {
+				this._events.splice(i, 1);
+				this._n.removeEventListener('click', event.handler, false);
+			}
+		}
 
 		return this;
 	};
@@ -1133,6 +1167,10 @@
 
 		return this;
 	};
+
+// TODO: offEvent([name] [, handler]);
+
+// TODO: eventCount([name] [, handler])
 
 	/**
 	 * Triggers a 'click' event on this wrapped element.
