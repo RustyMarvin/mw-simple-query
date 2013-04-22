@@ -1116,6 +1116,9 @@ test('#onMouseenter', function () {
 
 	$e.onMouseenter(handler);
 
+	var okA = $e._events[0].userName === 'mouseenter' && $e._events[0].domName === 'mouseover' && $e._events[0].userHandler === handler;
+	ok(okA, 'Event handler internally stored in wrapped element');
+
 	// outer div -> test div, should trigger
 	triggerMouseEvent('mouseover', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseenter\' attached and triggered (outer div to test div)');
@@ -1127,6 +1130,54 @@ test('#onMouseenter', function () {
 	ok(counter === 1, 'Event \'mouseenter\' correctly NOT triggered (inner div to test div)');
 
 	$e.node.removeEventListener('mouseover', handler, false);
+});
+
+test('#offMouseenter', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.offMouseenter(null); },
+		TypeError,
+		'Throws type error if handler is not a function'
+	);
+
+	var counterA,
+		counterB;
+	var handlerA = function (event) { counterA += 1; },
+		handlerB = function (event) { counterB += 1; };
+	var okA,
+		okB;
+
+	// prepare
+	$e.onMouseenter(handlerA);
+	$e.onMouseenter(handlerB);
+
+	// remove by handler
+	$e.offMouseenter(handlerA);
+
+	okB = $e._events[0].userName === 'mouseenter' && $e._events[0].domName === 'mouseover' && $e._events[0].userHandler === handlerB;
+	ok(okB && $e._events.length === 1, 'Event handler A internally removed by handler from wrapped element');
+
+	counterA = 0;
+	counterB = 0;
+	triggerMouseEvent('mouseover', $e.node, $('#outer').node);
+	ok(counterA === 0 && counterB === 1, 'Event handler A removed by handler from dom element');
+
+	// prepare
+	$e.onMouseenter(handlerA);
+
+	// remove all
+	$e.offMouseenter();
+	ok($e._events.length === 0, 'All event handler internally removed from wrapped element');
+
+	counterA = 0;
+	counterB = 0;
+	triggerMouseEvent('mouseover', $e.node, $('#outer').node);
+	ok(counterA === 0 && counterB === 0, 'All event handler removed from dom element');
 });
 
 test('#onMouseleave', function () {
@@ -1153,6 +1204,9 @@ test('#onMouseleave', function () {
 
 	$e.onMouseleave(handler);
 
+	var okA = $e._events[0].userName === 'mouseleave' && $e._events[0].domName === 'mouseout' && $e._events[0].userHandler === handler;
+	ok(okA, 'Event handler internally stored in wrapped element');
+
 	// test div -> outer div, should trigger
 	triggerMouseEvent('mouseout', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseleave\' attached and triggered (test div to outer div)');
@@ -1165,3 +1219,52 @@ test('#onMouseleave', function () {
 
 	$e.node.removeEventListener('mouseout', handler, false);
 });
+
+test('#offMouseleave', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.offMouseleave(null); },
+		TypeError,
+		'Throws type error if handler is not a function'
+	);
+
+	var counterA,
+		counterB;
+	var handlerA = function (event) { counterA += 1; },
+		handlerB = function (event) { counterB += 1; };
+	var okA,
+		okB;
+
+	// prepare
+	$e.onMouseleave(handlerA);
+	$e.onMouseleave(handlerB);
+
+	// remove by handler
+	$e.offMouseleave(handlerA);
+
+	okB = $e._events[0].userName === 'mouseleave' && $e._events[0].domName === 'mouseout' && $e._events[0].userHandler === handlerB;
+	ok(okB && $e._events.length === 1, 'Event handler A internally removed by handler from wrapped element');
+
+	counterA = 0;
+	counterB = 0;
+	triggerMouseEvent('mouseout', $e.node, $('#outer').node);
+	ok(counterA === 0 && counterB === 1, 'Event handler A removed by handler from dom element');
+
+	// prepare
+	$e.onMouseleave(handlerA);
+
+	// remove all
+	$e.offMouseleave();
+	ok($e._events.length === 0, 'All event handler internally removed from wrapped element');
+
+	counterA = 0;
+	counterB = 0;
+	triggerMouseEvent('mouseout', $e.node, $('#outer').node);
+	ok(counterA === 0 && counterB === 0, 'All event handler removed from dom element');
+});
+

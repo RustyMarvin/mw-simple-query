@@ -1268,14 +1268,14 @@
 	 */
 	ElementWrapper.prototype.onMouseenter = function (handler) {
 		var thisNode,
-			eventHandler;
+			domHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseenter: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
-		eventHandler = function (e) {
+		domHandler = function (e) {
 			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
@@ -1286,10 +1286,10 @@
 			userName: 'mouseenter',
 			userHandler: handler,
 			domName: 'mouseover',
-			domHandler: eventHandler
+			domHandler: domHandler
 		});
 
-		this._n.addEventListener('mouseover', eventHandler, false);
+		this._n.addEventListener('mouseover', domHandler, false);
 
 		return this;
 	};
@@ -1336,14 +1336,14 @@
 	 */
 	ElementWrapper.prototype.onMouseleave = function (handler) {
 		var thisNode,
-			eventHandler;
+			domHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseleave: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
-		eventHandler = function (e) {
+		domHandler = function (e) {
 			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
@@ -1354,10 +1354,10 @@
 			userName: 'mouseleave',
 			userHandler: handler,
 			domName: 'mouseout',
-			domHandler: eventHandler
+			domHandler: domHandler
 		});
 
-		this._n.addEventListener('mouseout', eventHandler, false);
+		this._n.addEventListener('mouseout', domHandler, false);
 
 		return this;
 	};
