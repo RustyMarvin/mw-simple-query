@@ -1256,8 +1256,8 @@
 	};
 
 	/**
-	 * Adds a 'mouseover' event listener to this wrapped element
-	 * and emulates 'mouseenter' behaviour.
+	 * Adds a 'mouseenter' event listener to the wrapped element.
+	 * Actually a 'mouseover' event listener is attached and 'mouseenter' behaviour is emulated.
 	 * 'this' inside the handler is set to the dom element that triggered the event.  
 	 * The handler gets the event object as parameter.
 	 * @param {function} handler	The event handler.
@@ -1267,26 +1267,65 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
 	ElementWrapper.prototype.onMouseenter = function (handler) {
-		var thisNode;
+		var thisNode,
+			eventHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseenter: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
-		this._n.addEventListener('mouseover', function (e) {
+		eventHandler = function (e) {
 			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
 			handler.call(this, e);
-		}, false);
+		};
+
+		this._events.push({
+			userName: 'mouseenter',
+			userHandler: handler,
+			domName: 'mouseover',
+			domHandler: eventHandler
+		});
+
+		this._n.addEventListener('mouseover', eventHandler, false);
 
 		return this;
 	};
 
 	/**
-	 * Adds a 'mouseout' event listener to this wrapped element
-	 * and emulates 'mouseleave' behaviour.
+	 * Removes a 'mouseenter' event listener from this wrapped element.
+	 * If no handler given, any 'mouseenter' event is removed.
+	 * Note: can only remove events that are attached by this library
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper.prototype.offMouseenter = function (handler) {
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#offMouseenter: Invalid type for handler given!');
+		}
+
+		var i,
+			event;
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if (event.userName === 'mouseenter' && (handler === undefined || event.userHandler === handler)) {
+				this._events.splice(i, 1);
+				this._n.removeEventListener('mouseover', event.domHandler, false);
+			}
+		}
+
+		return this;
+	};
+
+	/**
+	 * Adds a 'mouseleave' event listener to the wrapped element.
+	 * Actually a 'mouseout' event listener is attached and 'mouseleave' behaviour is emulated.
 	 * 'this' inside the handler is set to the dom element that triggered the event.  
 	 * The handler gets the event object as parameter.
 	 * @param {function} handler	The event handler.
@@ -1296,19 +1335,58 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
 	ElementWrapper.prototype.onMouseleave = function (handler) {
-		var thisNode;
+		var thisNode,
+			eventHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseleave: Invalid type for handler given!');
 		}
 
 		thisNode = this._n;
-		this._n.addEventListener('mouseout', function (e) {
+		eventHandler = function (e) {
 			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
 			handler.call(this, e);
-		}, false);
+		};
+
+		this._events.push({
+			userName: 'mouseleave',
+			userHandler: handler,
+			domName: 'mouseout',
+			domHandler: eventHandler
+		});
+
+		this._n.addEventListener('mouseout', eventHandler, false);
+
+		return this;
+	};
+
+	/**
+	 * Removes a 'mouseleave' event listener from this wrapped element.
+	 * If no handler given, any 'mouseleave' event is removed.
+	 * Note: can only remove events that are attached by this library
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper.prototype.offMouseleave = function (handler) {
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#offMouseleave: Invalid type for handler given!');
+		}
+
+		var i,
+			event;
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if (event.userName === 'mouseleave' && (handler === undefined || event.userHandler === handler)) {
+				this._events.splice(i, 1);
+				this._n.removeEventListener('mouseout', event.domHandler, false);
+			}
+		}
 
 		return this;
 	};
