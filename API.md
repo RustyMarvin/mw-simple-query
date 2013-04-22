@@ -66,7 +66,9 @@
 	* [.eventCount( [name] [, handler] )](#wrapped-element-eventcount)
 	* [.triggerClick()](#wrapped-element-triggerclick)
 	* [.onMouseenter( handler )](#wrapped-element-onmouseenterleave)
+	* [.offMouseenter( [handler] )](#wrapped-element-offmouseenterleave)
 	* [.onMouseleave( handler )](#wrapped-element-onmouseenterleave)
+	* [.offMouseleave( [handler] )](#wrapped-element-offmouseenterleave)
 
 
 <hr>
@@ -1007,4 +1009,23 @@ info: [www.quirksmode.org](http://www.quirksmode.org/js/events_mouse.html#mouseo
 info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
 
 [↑up](#toc)
+
+
+<a name="wrapped-element-offmouseenterleave"></a>
+### .offMouseenter( [handler] ) / .offMouseleave( [handler] )
+
+Removes a 'mouseenter'/'mouseleave' event listener from the wrapped element.  
+If no handler given, any 'mouseenter'/'mouseleave' event is removed.  
+Note: can only remove events that are attached by this library
+
+**handler** _{function}_: Optional, the 'mouseenter'/'mouseleave' event handler.  
+**returns** _{object}_: The wrapped element.
+
+	simpleQuery('div.header').offMouseenter(); // any 'mouseenter' handler is removed
+
+wraps: [element.removeEventListener](https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener)  
+info: [Event object](https://developer.mozilla.org/en-US/docs/DOM/event)
+
+[↑up](#toc)
+
 
