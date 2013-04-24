@@ -61,14 +61,14 @@
 	* [.show()](#wrapped-element-show)
 	* [.onClick( handler )](#wrapped-element-onclick)
 	* [.offClick( [handler] )](#wrapped-element-offclick)
-	* [.onEvent( name, handler )](#wrapped-element-onevent)
-	* [.offEvent( [name] [, handler] )](#wrapped-element-offevent)
-	* [.eventCount( [name] [, handler] )](#wrapped-element-eventcount)
-	* [.triggerClick()](#wrapped-element-triggerclick)
 	* [.onMouseenter( handler )](#wrapped-element-onmouseenterleave)
 	* [.offMouseenter( [handler] )](#wrapped-element-offmouseenterleave)
 	* [.onMouseleave( handler )](#wrapped-element-onmouseenterleave)
 	* [.offMouseleave( [handler] )](#wrapped-element-offmouseenterleave)
+	* [.onEvent( name, handler )](#wrapped-element-onevent)
+	* [.offEvent( [name] [, handler] )](#wrapped-element-offevent)
+	* [.eventCount( [name] [, handler] )](#wrapped-element-eventcount)
+	* [.triggerClick()](#wrapped-element-triggerclick)
 
 
 <hr>

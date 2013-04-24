@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.5
+ * MW Simple Query, v2.6
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
@@ -1092,6 +1092,69 @@
 	// ─────── events ─────────────────────────────────────────────────────────
 
 	/**
+	 * Adds an event listener to this wrapped element and
+	 * stores references to enable later removal of the listener.
+	 * The differentiation between user and dom is needed for synthetic events like 'mouseenter',
+	 * where user and dom -names and -handlers differ.
+	 * @param {string} userEventName		The event name visible to the user.
+	 * @param {function} userEventHandler	The event handler visible to the user.
+	 * @param {string} domEventName			The actual event name.
+	 * @param {function} userEventHandler	The actual event handler.
+	 * @static
+	 * @private
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener
+	 */
+	ElementWrapper._addEventListener = function (userEventName, userEventHandler, domEventName, domEventHandler) {
+		var domName = domEventName || userEventName,
+			domHandler = domEventHandler || userEventHandler;
+
+		if (!(this instanceof ElementWrapper)) {
+			throw new TypeError('ElementWrapper#_addEventListener: Invalid \'this\'!');
+		}
+
+		this._events.push({
+			userName: userEventName,
+			userHandler: userEventHandler,
+			domName: domName,
+			domHandler: domHandler
+		});
+
+		this._n.addEventListener(domName, domHandler, false);
+	};
+
+	/**
+	 * Adds an event listener to this wrapped element and
+	 * stores references to enable later removal of the listener.
+	 * The differentiation between user and dom is needed for synthetic events like 'mouseenter',
+	 * where user and dom -names and -handlers differ.
+	 * @param {string} userEventName		The event name visible to the user.
+	 * @param {function} userEventHandler	The event handler visible to the user.
+	 * @static
+	 * @private
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper._removeEventListener = function (userEventName, userEventHandler) {
+		var i,
+			event;
+
+		if (!(this instanceof ElementWrapper)) {
+			throw new TypeError('ElementWrapper#_addEventListener: Invalid \'this\'!');
+		}
+
+		for (i = this._events.length; i--;) {
+			event = this._events[i];
+			if ((userEventName === undefined || event.userName === userEventName) && (userEventHandler === undefined || event.userHandler === userEventHandler)) {
+				this._events.splice(i, 1);
+				this._n.removeEventListener(event.domName, event.domHandler, false);
+			}
+		}
+	};
+
+	/**
 	 * Adds a 'click' event listener to this wrapped element.
 	 * 'this' inside the handler is set to the dom element that triggered the event.  
 	 * The handler gets the event object as parameter.
@@ -1106,11 +1169,7 @@
 			throw new TypeError('simpleQuery#onClick: Invalid type for handler given!');
 		}
 
-		this._events.push({
-			name: 'click',
-			handler: handler
-		});
-		this._n.addEventListener('click', handler, false);
+		ElementWrapper._addEventListener.call(this, 'click', handler);
 
 		return this;
 	};
@@ -1130,127 +1189,7 @@
 			throw new TypeError('simpleQuery#offClick: Invalid type for handler given!');
 		}
 
-		var i,
-			event;
-
-		for (i = this._events.length; i--;) {
-			event = this._events[i];
-			if (event.name === 'click' && (handler === undefined || event.handler === handler)) {
-				this._events.splice(i, 1);
-				this._n.removeEventListener('click', event.handler, false);
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Adds an event listener to this wrapped element.
-	 * 'this' inside the handler is set to the dom element that triggered the event.  
-	 * The handler gets the event object as parameter.
-	 * @param {string} name			The event name.
-	 * @param {function} handler	The event handler.
-	 * @returns {object}			This wrapped element.
-	 *
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener
-	 */
-	ElementWrapper.prototype.onEvent = function (name, handler) {
-		if (typeof name !== 'string') {
-			throw new TypeError('simpleQuery#onEvent: Invalid type for name given!');
-		}
-		if (typeof handler !== 'function') {
-			throw new TypeError('simpleQuery#onEvent: Invalid type for handler given!');
-		}
-
-		this._events.push({
-			name: name,
-			handler: handler
-		});
-		this._n.addEventListener(name, handler, false);
-
-		return this;
-	};
-
-	/**
-	 * Removes an event listener from this wrapped element.
-	 * If no handler given, any event 'name' is removed.
-	 * If no name given, any event is removed.
-	 * Note: can only remove events that are attached by this library
-	 * @param {string} [name]		The event name.
-	 * @param {function} [handler]	The event handler.
-	 * @returns {object}			This wrapped element.
-	 *
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
-	 */
-	ElementWrapper.prototype.offEvent = function (name, handler) {
-		if (name !== undefined && typeof name !== 'string') {
-			throw new TypeError('simpleQuery#offEvent: Invalid type for name given!');
-		}
-		if (handler !== undefined && typeof handler !== 'function') {
-			throw new TypeError('simpleQuery#offEvent: Invalid type for handler given!');
-		}
-
-		var i,
-			event;
-
-		for (i = this._events.length; i--;) {
-			event = this._events[i];
-			if ((name === undefined || event.name === name) && (handler === undefined || event.handler === handler)) {
-				this._events.splice(i, 1);
-				this._n.removeEventListener(event.name, event.handler, false);
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Counts all events attached to this wrapped element.
-	 * If no handler given, any event 'name' is counted.
-	 * If no name given, all events are counted.
-	 * Note: can only count events that are attached by this library
-	 * @param {string} [name]		The event name.
-	 * @param {function} [handler]	The event handler.
-	 * @returns {object}			This wrapped element.
-	 */
-	ElementWrapper.prototype.eventCount = function (name, handler) {
-		if (name !== undefined && typeof name !== 'string') {
-			throw new TypeError('simpleQuery#eventCount: Invalid type for name given!');
-		}
-		if (handler !== undefined && typeof handler !== 'function') {
-			throw new TypeError('simpleQuery#eventCount: Invalid type for handler given!');
-		}
-
-		var i,
-			event,
-			count = 0;
-
-		for (i = this._events.length; i--;) {
-			event = this._events[i];
-			if ((name === undefined || event.name === name) && (handler === undefined || event.handler === handler)) {
-				count += 1;
-			}
-		}
-
-		return count;
-	};
-
-	/**
-	 * Triggers a 'click' event on this wrapped element.
-	 * @returns {object}	This wrapped element.
-	 *
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/document.createEvent
-	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent
-	 * @see https://github.com/bitovi/syn#readme
-	 */
-	ElementWrapper.prototype.triggerClick = function () {
-		var click = document.createEvent('UIEvents');
-
-		click.initEvent('click', true, true, window, 1);
-		this._n.dispatchEvent(click);
+		ElementWrapper._removeEventListener.call(this, 'click', handler);
 
 		return this;
 	};
@@ -1282,14 +1221,7 @@
 			handler.call(this, e);
 		};
 
-		this._events.push({
-			userName: 'mouseenter',
-			userHandler: handler,
-			domName: 'mouseover',
-			domHandler: domHandler
-		});
-
-		this._n.addEventListener('mouseover', domHandler, false);
+		ElementWrapper._addEventListener.call(this, 'mouseenter', handler, 'mouseover', domHandler);
 
 		return this;
 	};
@@ -1309,16 +1241,7 @@
 			throw new TypeError('simpleQuery#offMouseenter: Invalid type for handler given!');
 		}
 
-		var i,
-			event;
-
-		for (i = this._events.length; i--;) {
-			event = this._events[i];
-			if (event.userName === 'mouseenter' && (handler === undefined || event.userHandler === handler)) {
-				this._events.splice(i, 1);
-				this._n.removeEventListener('mouseover', event.domHandler, false);
-			}
-		}
+		ElementWrapper._removeEventListener.call(this, 'mouseenter', handler);
 
 		return this;
 	};
@@ -1350,14 +1273,7 @@
 			handler.call(this, e);
 		};
 
-		this._events.push({
-			userName: 'mouseleave',
-			userHandler: handler,
-			domName: 'mouseout',
-			domHandler: domHandler
-		});
-
-		this._n.addEventListener('mouseout', domHandler, false);
+		ElementWrapper._addEventListener.call(this, 'mouseleave', handler, 'mouseout', domHandler);
 
 		return this;
 	};
@@ -1377,16 +1293,105 @@
 			throw new TypeError('simpleQuery#offMouseleave: Invalid type for handler given!');
 		}
 
+		ElementWrapper._removeEventListener.call(this, 'mouseleave', handler);
+
+		return this;
+	};
+
+	/**
+	 * Adds an event listener to this wrapped element.
+	 * 'this' inside the handler is set to the dom element that triggered the event.
+	 * The handler gets the event object as parameter.
+	 * @param {string} name			The event name.
+	 * @param {function} handler	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.addEventListener
+	 */
+	ElementWrapper.prototype.onEvent = function (name, handler) {
+		if (typeof name !== 'string') {
+			throw new TypeError('simpleQuery#onEvent: Invalid type for name given!');
+		}
+		if (typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#onEvent: Invalid type for handler given!');
+		}
+
+		ElementWrapper._addEventListener.call(this, name, handler);
+
+		return this;
+	};
+
+	/**
+	 * Removes an event listener from this wrapped element.
+	 * If no handler given, any event 'name' is removed.
+	 * If no name given, any event is removed.
+	 * Note: can only remove events that are attached by this library
+	 * @param {string} [name]		The event name.
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.removeEventListener
+	 */
+	ElementWrapper.prototype.offEvent = function (name, handler) {
+		if (name !== undefined && typeof name !== 'string') {
+			throw new TypeError('simpleQuery#offEvent: Invalid type for name given!');
+		}
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#offEvent: Invalid type for handler given!');
+		}
+
+		ElementWrapper._removeEventListener.call(this, name, handler);
+
+		return this;
+	};
+
+	/**
+	 * Counts all events attached to this wrapped element.
+	 * If no handler given, any event 'name' is counted.
+	 * If no name given, all events are counted.
+	 * Note: can only count events that are attached by this library
+	 * @param {string} [name]		The event name.
+	 * @param {function} [handler]	The event handler.
+	 * @returns {object}			This wrapped element.
+	 */
+	ElementWrapper.prototype.eventCount = function (name, handler) {
+		if (name !== undefined && typeof name !== 'string') {
+			throw new TypeError('simpleQuery#eventCount: Invalid type for name given!');
+		}
+		if (handler !== undefined && typeof handler !== 'function') {
+			throw new TypeError('simpleQuery#eventCount: Invalid type for handler given!');
+		}
+
 		var i,
-			event;
+			event,
+			count = 0;
 
 		for (i = this._events.length; i--;) {
 			event = this._events[i];
-			if (event.userName === 'mouseleave' && (handler === undefined || event.userHandler === handler)) {
-				this._events.splice(i, 1);
-				this._n.removeEventListener('mouseout', event.domHandler, false);
+			if ((name === undefined || event.userName === name) && (handler === undefined || event.userHandler === handler)) {
+				count += 1;
 			}
 		}
+
+		return count;
+	};
+
+	/**
+	 * Triggers a 'click' event on this wrapped element.
+	 * @returns {object}	This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/document.createEvent
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.dispatchEvent
+	 * @see https://github.com/bitovi/syn#readme
+	 */
+	ElementWrapper.prototype.triggerClick = function () {
+		var click = document.createEvent('UIEvents');
+
+		click.initEvent('click', true, true, window, 1);
+		this._n.dispatchEvent(click);
 
 		return this;
 	};
