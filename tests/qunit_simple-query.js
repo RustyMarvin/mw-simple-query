@@ -122,6 +122,47 @@ test('#createFragment', function () {
 
 module('simpleQuery Utilities');
 
+test('#toType', function () {
+	var $ = window.simpleQuery;
+	// qfixAddHtml('<div class="id1"></div>');
+
+	throws(
+		function () { $.toType(); },
+		TypeError,
+		'Throws type error if no argument given'
+	);
+
+	// 'undefined', 'null', 'boolean', 'number', 'string', 'array', 'object', 'date', 'regexp', 'error', 'math', 'json', 'arguments'.
+
+	var t;
+	strictEqual($.toType(t), 'undefined', 'Type \'undefined\' ok');
+	t = null;
+	strictEqual($.toType(t), 'null', 'Type \'null\' ok');
+	t = true;
+	strictEqual($.toType(t), 'boolean', 'Type \'boolean\' ok');
+	t = 123;
+	strictEqual($.toType(t), 'number', 'Type \'number\' ok');
+	t = 'abc';
+	strictEqual($.toType(t), 'string', 'Type \'string\' ok');
+	t = [];
+	strictEqual($.toType(t), 'array', 'Type \'array\' ok');
+	t = {};
+	strictEqual($.toType(t), 'object', 'Type \'object\' ok');
+	t = new Date();
+	strictEqual($.toType(t), 'date', 'Type \'date\' ok');
+	t = /\d+/;
+	strictEqual($.toType(t), 'regexp', 'Type \'regexp\' ok');
+	t = new Error('Test');
+	strictEqual($.toType(t), 'error', 'Type \'error\' ok');
+	t = Math;
+	strictEqual($.toType(t), 'math', 'Type \'math\' ok');
+	t = JSON;
+	strictEqual($.toType(t), 'json', 'Type \'json\' ok');
+	t = (function () { return arguments; }());
+	strictEqual($.toType(t), 'arguments', 'Type \'arguments\' ok');
+
+});
+
 test('#toArray', function () {
 	var $ = window.simpleQuery;
 	// qfixAddHtml('<div class="id1"></div>');

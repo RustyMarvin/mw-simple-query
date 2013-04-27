@@ -239,7 +239,7 @@
 	/**
 	 * Returns the actual type of the given object:
 	 *   'undefined', 'null', 'boolean', 'number', 'string', 'array', 'object', 
-	 *   'date', 'regexp', 'error', 'math', 'json', arguments.
+	 *   'date', 'regexp', 'error', 'math', 'json', 'arguments'.
 	 * @param {mixed} obj			Any type.
 	 * @returns {string}			The actual type of the given data.
 	 *
@@ -248,6 +248,9 @@
 	 */
 	var toTypeRE = /\s([a-zA-Z]+)/;
 	simpleQuery.toType = function(obj) {
+		if (arguments.length === 0) {
+			throw new TypeError('simpleQuery#toType: No argument given!');
+		}
 		return Object.prototype.toString.call(obj).match(toTypeRE)[1].toLowerCase();
 	};
 

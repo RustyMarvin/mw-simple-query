@@ -220,7 +220,7 @@ info: [MDN document.readyState](https://developer.mozilla.org/en-US/docs/DOM/doc
 ### simpleQuery.toType( variable )
 
 Returns the actual type of the given variable.  
-'undefined', 'null', 'boolean', 'number', 'string', 'array', 'object', 'date', 'regexp', 'error', 'math', 'json', arguments.
+'undefined', 'null', 'boolean', 'number', 'string', 'array', 'object', 'date', 'regexp', 'error', 'math', 'json', 'arguments'.
 
 **variable** _{mixed}_: Any type.  
 **returns** _{string}_: The actual type of the given data.
