@@ -767,6 +767,28 @@
 	};
 
 	/**
+	 * Adds classes to the list of classes of this wrapped element.
+	 * @param {array} names			An array of CSS class names.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.classList
+	 */
+	ElementWrapper.prototype.addClasses = function (names) {
+		if (!Array.isArray(names)) {
+			throw new TypeError('simpleQuery#addClasses: Invalid type for names given!');
+		}
+		var this_n = this._n;
+		names.forEach(function (name) {
+			if (typeof name !== 'string') {
+				throw new TypeError('simpleQuery#addClasses: Invalid type for name given!');
+			}
+			this_n.classList.add(name);
+		});
+
+		return this;
+	};
+
+	/**
 	 * Removes a class from the list of classes of this wrapped element.
 	 * @param {string} name			A CSS class name.
 	 * @returns {object}			This wrapped element.
@@ -778,6 +800,28 @@
 			throw new TypeError('simpleQuery#removeClass: Invalid type for name given!');
 		}
 		this._n.classList.remove(name);
+
+		return this;
+	};
+
+	/**
+	 * Removes classes from the list of classes of this wrapped element.
+	 * @param {array} names			An array of CSS class names.
+	 * @returns {object}			This wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/element.classList
+	 */
+	ElementWrapper.prototype.removeClasses = function (names) {
+		if (!Array.isArray(names)) {
+			throw new TypeError('simpleQuery#removeClasses: Invalid type for names given!');
+		}
+		var this_n = this._n;
+		names.forEach(function (name) {
+			if (typeof name !== 'string') {
+				throw new TypeError('simpleQuery#removeClasses: Invalid type for name given!');
+			}
+			this_n.classList.remove(name);
+		});
 
 		return this;
 	};

@@ -42,8 +42,10 @@
 	* [.data( [key] [, value] )](#wrapped-element-data)
 	* [.style( name [, value] ) / .style( obj )](#wrapped-element-style)
 	* [.setClass( name )](#wrapped-element-setclass)
-	* [.addClass( name )](#wrapped-element-setclass)
+	* [.addClass( name )](#wrapped-element-addclass)
+	* [.addClasses( names )](#wrapped-element-addclasses)
 	* [.removeClass( name )](#wrapped-element-addclass)
+	* [.removeClasses( names )](#wrapped-element-addclasses)
 	* [.toggleClass( name )](#wrapped-element-toggleclass)
 	* [.containsClass( name )](#wrapped-element-containsclass)
 	* [.text( [content] )](#wrapped-element-text)
@@ -637,6 +639,22 @@ Adds/removes a class to/from the list of classes of the wrapped element.
 
 	simpleQuery('div.header').addClass('myClass');  
 	simpleQuery('div.header').removeClass('myClass');
+
+wraps: [element.classList](https://developer.mozilla.org/en-US/docs/DOM/element.classList)
+
+[↑up](#toc)
+
+
+<a name="wrapped-element-addclasses"></a>
+### .addClasses( names ) / .removeClasses( names )
+
+Adds/removes a list of classes to/from the list of classes of the wrapped element.
+
+**names** _{array}_: An array of CSS class names.  
+**returns** _{object}_: The wrapped element.
+
+	simpleQuery('div.header').addClasses(['myClassOne', 'myClassTwo']);  
+	simpleQuery('div.header').removeClasses(['myClassOne', 'myClassTwo']);
 
 wraps: [element.classList](https://developer.mozilla.org/en-US/docs/DOM/element.classList)
 

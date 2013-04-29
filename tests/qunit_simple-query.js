@@ -5,6 +5,8 @@
  * MIT License, see LICENSE.txt, see http://www.opensource.org/licenses/mit-license.php
  */
 
+'use strict';
+
 // counts for ALL tests
 QUnit.config.testTimeout = 20000;
 

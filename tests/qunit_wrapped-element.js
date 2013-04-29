@@ -6,6 +6,9 @@
  */
 
 
+'use strict';
+
+
 // wrapped element tests
 
 
@@ -459,6 +462,35 @@ test('#addClass', function () {
 	ok(n.className === 'cl1 cl2', 'Add class correctly');
 });
 
+test('#addClasses', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1" class="cl1"></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.addClass(); },
+		TypeError,
+		'Throws type error if no array as parameter given'
+	);
+
+	throws(
+		function () { $e.addClass([0]); },
+		TypeError,
+		'Throws type error if parameter array contains other type than string'
+	);
+
+	$e.addClasses([]);
+	ok(n.className === 'cl1', 'Empty parameter array handled without error');
+
+	$e.addClasses(['cl2']);
+	ok(n.className === 'cl1 cl2', 'Added single class correctly');
+
+	$e.addClasses(['cl3', 'cl4']);
+	ok(n.className === 'cl1 cl2 cl3 cl4', 'Added multiple classes correctly');
+});
+
 test('#removeClass', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="id1" class="cl1 cl2"></div>');
@@ -474,6 +506,38 @@ test('#removeClass', function () {
 
 	$e.removeClass('cl1');
 	ok(n.className === 'cl2', 'Remove class correctly');
+});
+
+test('#removeClasses', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1" class="cl1 cl2 cl3 cl4"></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.removeClass(); },
+		TypeError,
+		'Throws type error if no array as parameter given'
+	);
+
+	throws(
+		function () { $e.removeClass([0]); },
+		TypeError,
+		'Throws type error if parameter array contains other type than string'
+	);
+
+	$e.removeClasses([]);
+	ok(n.className === 'cl1 cl2 cl3 cl4', 'Empty parameter array handled without error');
+
+	$e.removeClasses(['cl5']);
+	ok(n.className === 'cl1 cl2 cl3 cl4', 'Removing non-existent class handled without error');
+
+	$e.removeClasses(['cl1']);
+	ok(n.className === 'cl2 cl3 cl4', 'Removed single class correctly');
+
+	$e.removeClasses(['cl2', 'cl3']);
+	ok(n.className === 'cl4', 'Removed multiple classes correctly');
 });
 
 test('#toggleClass', function () {
