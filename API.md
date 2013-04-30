@@ -178,7 +178,7 @@ Creates a new css rule and inserts it into the document.
 
 **rule** _{string}_: A css rule.
 
-    var e = simpleQuery.addCssRule('h1 { color: red; }');
+    simpleQuery.addCssRule('h1 { color: red; }');
 
 wraps: [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/DOM/CSSStyleSheet/insertRule)  
 info: [MDN dynamic styling](https://developer.mozilla.org/en-US/docs/DOM/Using_dynamic_styling_information)
