@@ -178,6 +178,35 @@
 		this._styleSheet.insertRule(cssRule, this._styleSheet.cssRules.length);
 	};
 
+	/**
+	 * Removes css rules from the document by given CSS selector.
+	 * Note: Can only remove rules that are added with .addCssRule()
+	 * @param {string} selector		A css selector to identify the rules to remove.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/Using_dynamic_styling_information
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/CSSStylesheet
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/CSSStyleSheet/deleteRule
+	 */
+	simpleQuery.removeCssRules = function (selector) {
+		var styleSheet = this._styleSheet;
+
+		if (typeof selector !== 'string') {
+			throw new TypeError('simpleQuery#removeCssRule: Invalid type for selector given!');
+		}
+
+		if (!styleSheet) {
+			return;
+		}
+
+		this.toArray(styleSheet.cssRules)
+		.reduceRight(function (arr, rule, idx) {
+			return (rule.selectorText === selector) ? (arr.push(idx), arr) : arr;
+		}, [])
+		.forEach(function (idx) {
+			styleSheet.deleteRule(idx);
+		});
+	};
+
 	// ─────── events ─────────────────────────────────────────────────────────
 
 	/**

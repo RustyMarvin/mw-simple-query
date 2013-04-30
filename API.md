@@ -10,6 +10,7 @@
 	* [.createfragment()](#simple-query-createfragment)
 	* [.addCssFile( path )](#simple-query-addcssfile)
 	* [.addCssRule( rule )](#simple-query-addcssrule)
+	* [.removeCssRules( selector )](#simple-query-removecssrules)
 	* [.onDOMReady( callback )](#simple-query-ondomready)
 	* [.onLoad( callback )](#simple-query-onload)
 	* [.toType( variable )](#simple-query-totype)
@@ -181,6 +182,23 @@ Creates a new css rule and inserts it into the document.
     simpleQuery.addCssRule('h1 { color: red; }');
 
 wraps: [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/DOM/CSSStyleSheet/insertRule)  
+info: [MDN dynamic styling](https://developer.mozilla.org/en-US/docs/DOM/Using_dynamic_styling_information)
+
+[↑up](#toc)
+
+
+<a name="simple-query-removecssrules"></a>
+### simpleQuery.removeCssRules( selector )
+
+Removes css rules from the document by given css selector.  
+Note: can only remove rules that are previously added with .addCssRule()
+
+**selector** _{string}_: A css selector.
+
+    simpleQuery.addCssRule('.myRule > span { color: red; }');  
+    simpleQuery.removeCssRules('.myRule > span');
+
+wraps: [CSSStyleSheet.deleteRule](https://developer.mozilla.org/en-US/docs/DOM/CSSStyleSheet/deleteRule)  
 info: [MDN dynamic styling](https://developer.mozilla.org/en-US/docs/DOM/Using_dynamic_styling_information)
 
 [↑up](#toc)

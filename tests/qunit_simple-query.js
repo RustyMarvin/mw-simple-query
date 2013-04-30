@@ -290,6 +290,66 @@ asyncTest('#addCssRule / async', 14, function () {
 	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_4.html"></iframe>');
 });
 
+test('#removeCssRules / error', function () {
+	var $ = window.simpleQuery;
+
+	throws(
+		function () { $.removeCssRules(); },
+		TypeError,
+		'Throws type error if no string given'
+	);
+});
+
+asyncTest('#removeCssRules / async', 4, function () {
+	var timerId;
+
+	var onMessage = function (event) {
+		window.clearTimeout(timerId);
+		window.removeEventListener('message', onMessage, false);
+
+		var iframe = document.getElementById('iframe1'),
+			iWin = iframe.contentWindow,
+			iDoc = iframe.contentDocument,
+			i$ = iframe.contentWindow.simpleQuery,
+			idx1,
+			idx2;
+
+		var addRules = [
+			'.cl1 { color: #FF0000; }',
+			'.cl1 > span { color: #00FF00; }',
+			'.cl1:hover { color: #0000FF; }',
+			'.cl2 { color: #FFFF00; }',
+			'.cl2 { font-size: 14px; }',
+			'.cl3 { color: #00FFFF; }',
+		];
+		addRules.forEach(function (rule) { i$.addCssRule(rule); });
+
+		var cssRules = iDoc.styleSheets[iDoc.styleSheets.length - 1].cssRules;
+
+		i$.removeCssRules('.cl1');
+		ok(cssRules.length === addRules.length - 1, 'Single css rule removed');
+		ok(cssRules[0].selectorText === '.cl1 > span', 'First css rule changed index');
+
+		i$.removeCssRules('.cl2');
+		ok(cssRules.length === addRules.length - 3, 'Multiple css rules removed');
+
+		i$.removeCssRules('.cl4');
+		ok(cssRules.length === addRules.length - 3, 'Rss rule not found raises no error');
+
+		start();
+	};
+	window.addEventListener('message', onMessage, false);
+
+	timerId = window.setTimeout(function () {
+		window.removeEventListener('message', onMessage, false);
+		ok(false, 'Event timeout!');
+		start();
+	}, 2000);
+
+	qfixAddHtml('<iframe id="iframe1" src="data/qunit_iframe_4.html"></iframe>');
+});
+
+
 module('simpleQuery Events');
 
 test('#onDOMReady / error', function () {
