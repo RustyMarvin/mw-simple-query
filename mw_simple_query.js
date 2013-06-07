@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.6
+ * MW Simple Query, v2.7
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
@@ -864,7 +864,7 @@
 	 */
 	ElementWrapper.prototype.toggleClass = function (name) {
 		if (typeof name !== 'string') {
-			throw new TypeError('simpleQuery#removeClass: Invalid type for name given!');
+			throw new TypeError('simpleQuery#toggleClass: Invalid type for name given!');
 		}
 		this._n.classList.toggle(name);
 
@@ -880,7 +880,7 @@
 	 */
 	ElementWrapper.prototype.containsClass = function (name) {
 		if (typeof name !== 'string') {
-			throw new TypeError('simpleQuery#removeClass: Invalid type for name given!');
+			throw new TypeError('simpleQuery#containsClass: Invalid type for name given!');
 		}
 		return this._n.classList.contains(name);
 	};
