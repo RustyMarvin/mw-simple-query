@@ -114,6 +114,26 @@ test('#create', function () {
 	);
 });
 
+test('#fromHtml', function () {
+	var $ = window.simpleQuery;
+
+	var $e1 = $.fromHtml('<div id="id1"><p>content</p></div>');
+	ok($e1.node.nodeType === 1, 'Returned wrapped element wraps a dom element');
+	ok($e1.node.nodeName === 'DIV', 'Returned wrapped elements node name matches given html');
+	ok($e1.node.id === 'id1', 'Returned wrapped elements node id matches given html');
+
+	var $e2 = $e1.select('p');
+	ok($e2.node.nodeName === 'P', 'Returned wrapped elements child node name matches given html');
+	ok($e2.node.textContent === 'content', 'Returned wrapped elements child nodes content matches given html');
+
+	throws(
+		function () { var $e1 = $.fromHtml(); },
+		TypeError,
+		'Throws type error if no string given'
+	);
+
+});
+
 test('#createFragment', function () {
 	var $ = window.simpleQuery;
 	// qfixAddHtml('<div class="id1"></div>');

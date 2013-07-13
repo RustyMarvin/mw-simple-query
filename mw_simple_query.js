@@ -87,7 +87,7 @@
 			});
 	};
 
-	// ─────── element creation ───────────────────────────────────────────────
+	// ─────── element handling ───────────────────────────────────────────────
 
 	/**
 	 * Creates a new dom element and returns it as a wrapped element.
@@ -101,6 +101,26 @@
 			throw new TypeError('simpleQuery#create: Invalid type for name given!');
 		}
 		return new ElementWrapper(document.createElement(name));
+	};
+
+	/**
+	 * Creates new a new dom element from the given html string and returns it as a wrapped element.
+	 * @param {string} html		A string containing html.
+	 * @returns {object}		A wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/document.createElement
+	 */
+	simpleQuery.fromHtml = function (html) {
+		var tmpElem;
+
+		if (typeof html !== 'string') {
+			throw new TypeError('simpleQuery#html: Invalid type for html given!');
+		}
+
+		tmpElem = document.createElement('div');
+		tmpElem.innerHTML = html;
+
+		return new ElementWrapper(tmpElem.firstChild);
 	};
 
 	/**

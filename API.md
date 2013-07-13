@@ -7,6 +7,7 @@
 	* [.wrap( element )](#simple-query-wrap)
 	* [.all( selector [, context] )](#simple-query-all)
 	* [.create( name )](#simple-query-create)
+	* [.fromHtml( html )](#simple-query-fromhtml)
 	* [.createfragment()](#simple-query-createfragment)
 	* [.addCssFile( path )](#simple-query-addcssfile)
 	* [.addCssRule( rule )](#simple-query-addcssrule)
@@ -139,6 +140,22 @@ Returns a wrapped element wrapping a newly created dom element.
     var e = simpleQuery.create('div');
 
 wraps: [document.createElement](https://developer.mozilla.org/en-US/docs/DOM/document.createElement)
+
+[↑up](#toc)
+
+
+<a name="simple-query-fromhtml"></a>
+### simpleQuery.fromHtml( html )
+
+Creates new a new dom element from the given html string and returns it as a wrapped element.
+
+**html** _{string}_: A string containing html.  
+**returns** _{object}_: A wrapped element.
+
+    var e = simpleQuery.fromHtml('<div><p>One</p><p>Two</p></div>');
+
+wraps: [document.createElement](https://developer.mozilla.org/en-US/docs/DOM/document.createElement)  
+and: [element.innerHTML](https://developer.mozilla.org/en-US/docs/DOM/element.innerHTML)
 
 [↑up](#toc)
 
