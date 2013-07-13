@@ -475,7 +475,7 @@
 	 */
 	ElementWrapper.prototype.hasAttrib = function (name) {
 		if (typeof name !== 'string') {
-			throw new TypeError('simpleQuery#removeAttrib: Invalid type for name given!');
+			throw new TypeError('simpleQuery#hasAttrib: Invalid type for name given!');
 		}
 		return this._n.hasAttribute(name);
 	};
