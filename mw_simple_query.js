@@ -1,5 +1,5 @@
 /**
- * MW Simple Query, v2.7
+ * MW Simple Query, v2.8
  *
  * Simple DOM access library.
  * Allows convenient access to native dom/element methods
