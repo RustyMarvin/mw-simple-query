@@ -1099,7 +1099,7 @@ test('#offClick', function () {
 
 test('#onMouseenter', function () {
 	var $ = window.simpleQuery;
-	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
+	qfixAddHtml('<div id="outermost"><div id="outer"><div id="id1"><div id="inner"><div id="innermost">Text Content</div></div></div></div></div>');
 
 	var n = document.getElementById('id1');
 	var $e = $('#id1');
@@ -1127,17 +1127,27 @@ test('#onMouseenter', function () {
 	$e.onMouseenter(handler);
 	ok(_evData(0, 'mouseenter', handler, 'mouseover') && _evLength(1), 'Event handler \'mouseenter\' internally stored in wrapped element');
 
+	// outermost div -> test div, should trigger
+	counter = 0;
+	triggerMouseEvent('mouseover', n, $('#outermost').node);
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(handlerEvent.type === 'mouseover', 'Event object given to handler, event type checked');
+	ok(counter === 1, 'Event \'mouseenter\' attached and triggered (outermost div to test div)');
+
 	// outer div -> test div, should trigger
 	counter = 0;
 	triggerMouseEvent('mouseover', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseenter\' attached and triggered (outer div to test div)');
-	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
-	ok(handlerEvent.type === 'mouseover', 'Event object given to handler, event type checked');
 
 	// inner div -> test div, should NOT trigger
 	counter = 0;
 	triggerMouseEvent('mouseover', n, $('#inner').node);
 	ok(counter === 0, 'Event \'mouseenter\' correctly NOT triggered (inner div to test div)');
+
+	// innermost div -> test div, should NOT trigger
+	counter = 0;
+	triggerMouseEvent('mouseover', n, $('#innermost').node);
+	ok(counter === 0, 'Event \'mouseenter\' correctly NOT triggered (innermost div to test div)');
 
 	// test if event data correctly stored by removal and trigger
 	_removeEventListener('mouseenter', handler);
@@ -1196,7 +1206,7 @@ test('#offMouseenter', function () {
 
 test('#onMouseleave', function () {
 	var $ = window.simpleQuery;
-	qfixAddHtml('<div id="outer"><div id="id1"><div id="inner">Text Content</div></div></div>');
+	qfixAddHtml('<div id="outermost"><div id="outer"><div id="id1"><div id="inner"><div id="innermost">Text Content</div></div></div></div></div>');
 
 	var n = document.getElementById('id1');
 	var $e = $('#id1');
@@ -1224,17 +1234,27 @@ test('#onMouseleave', function () {
 	$e.onMouseleave(handler);
 	ok(_evData(0, 'mouseleave', handler, 'mouseout') && _evLength(1), 'Event handler \'mouseleave\' internally stored in wrapped element');
 
+	// outermost div -> test div, should trigger
+	counter = 0;
+	triggerMouseEvent('mouseout', n, $('#outermost').node);
+	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
+	ok(handlerEvent.type === 'mouseout', 'Event object given to handler, event type checked');
+	ok(counter === 1, 'Event \'mouseleave\' attached and triggered (outermost div to test div)');
+
 	// outer div -> test div, should trigger
 	counter = 0;
 	triggerMouseEvent('mouseout', n, $('#outer').node);
 	ok(counter === 1, 'Event \'mouseleave\' attached and triggered (outer div to test div)');
-	ok(handlerThis === n, 'Event handler \'this\' is set to dom element');
-	ok(handlerEvent.type === 'mouseout', 'Event object given to handler, event type checked');
 
 	// inner div -> test div, should NOT trigger
 	counter = 0;
 	triggerMouseEvent('mouseout', n, $('#inner').node);
 	ok(counter === 0, 'Event \'mouseleave\' correctly NOT triggered (inner div to test div)');
+
+	// innermost div -> test div, should NOT trigger
+	counter = 0;
+	triggerMouseEvent('mouseout', n, $('#innermost').node);
+	ok(counter === 0, 'Event \'mouseleave\' correctly NOT triggered (innermost div to test div)');
 
 	// test if event data correctly stored by removal and trigger
 	_removeEventListener('mouseleave', handler);

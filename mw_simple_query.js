@@ -1282,18 +1282,32 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
 	ElementWrapper.prototype.onMouseenter = function (handler) {
-		var thisNode,
+		var docBody,
+			thisNode,
 			domHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseenter: Invalid type for handler given!');
 		}
 
+		docBody = document.body;
 		thisNode = this._n;
 		domHandler = function (e) {
-			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
+			var node;
+
+			// simple case
+			if (e.target !== thisNode || !e.relatedTarget || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
+			// walk the dom until this node or body found
+			node = e.relatedTarget;
+			while (node !== docBody) {
+				node = node.parentNode;
+				if (node === thisNode) {
+					return;
+				}
+			}
+
 			handler.call(this, e);
 		};
 
@@ -1334,18 +1348,32 @@
 	 * @see MDN https://developer.mozilla.org/en-US/docs/DOM/event
 	 */
 	ElementWrapper.prototype.onMouseleave = function (handler) {
-		var thisNode,
+		var docBody,
+			thisNode,
 			domHandler;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('simpleQuery#onMouseleave: Invalid type for handler given!');
 		}
 
+		docBody = document.body;
 		thisNode = this._n;
 		domHandler = function (e) {
-			if (e.target !== thisNode || e.target === e.relatedTarget.parentNode) {
+			var node;
+
+			// simple case
+			if (e.target !== thisNode || !e.relatedTarget || e.target === e.relatedTarget.parentNode) {
 				return;
 			}
+			// walk the dom until this node or body found
+			node = e.relatedTarget;
+			while (node !== docBody) {
+				node = node.parentNode;
+				if (node === thisNode) {
+					return;
+				}
+			}
+
 			handler.call(this, e);
 		};
 
