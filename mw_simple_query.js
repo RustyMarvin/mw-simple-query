@@ -663,7 +663,7 @@
 	 * @param {string} value		The new value associated with the key.
 	 * @returns {object}			This wrapped element.
 	 *
-	 * Gets all data as object with key/value pairs from the wrapped element.
+	 * Sets data key/value pairs from given object on this wrapped element..
 	 * @param {object} data			An object containing key/value pairs.
 	 * @returns {object}			This wrapped element.
 	 *
