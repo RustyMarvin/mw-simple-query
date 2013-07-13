@@ -818,6 +818,9 @@ wraps: [Element.children](https://developer.mozilla.org/en-US/docs/DOM/Element.c
 <a name="wrapped-element-removechild"></a>
 ### .removeChild( node )
 
+Removes the given child wrapped element/dom node from this wrapped elements child nodes and returns it as a wrapped element.  
+Note: If the given element was a wrapped element, the same instance is returned.
+
 **node** _{object}_: The child node to remove, given as wrapped element or dom element.  
 **returns** _{object}_: The removed child node wrapped element.
 

@@ -716,9 +716,11 @@ test('#removeChild', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="id1"><span id="s1">First</span><span id="s2">Second</span></div>');
 
-	var n1 = document.getElementById('s1');
-	var n2 = document.getElementById('s2');
 	var $e = $('#id1');
+	var n1 = document.getElementById('s1');
+	var $n1 = $e.select('#s1');
+	var n2 = document.getElementById('s2');
+	var $n2 = $e.select('#s2');
 	var c;
 	var $c;
 
@@ -728,13 +730,15 @@ test('#removeChild', function () {
 		'Throws type error if no object for child node given'
 	);
 
-	$c = $e.removeChild($e.select('#s1'));
+	$c = $e.removeChild($n1);
 	ok($c.node === n1, 'Removed child (wrapped element) returned');
+	ok($c === $n1, 'Removed child (wrapped element) returned same instance as given');
 	ok($e.childElements().length === 1, 'Remaining child count ok');
 
 	c = $e.select('#s2').node;
 	$c = $e.removeChild(c);
 	ok($c.node === n2, 'Removed child (dom element) returned');
+	ok($c !== $n2, 'Removed child (dom element) returned, new wrapped element created');
 	ok($e.childElements().length === 0, 'Remaining child count ok');
 });
 

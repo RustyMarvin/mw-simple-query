@@ -998,6 +998,7 @@
 
 	/**
 	 * Removes the given child wrapped element/dom node from this wrapped element and returns it.
+	 * Note: If the given element was a wrapped element, the same instance is returned.
 	 * @param {object} node		The child node to remove, given as wrapped element or dom element.
 	 * @returns {object}		The removed child as wrapped element.
 	 *
@@ -1008,7 +1009,9 @@
 			throw new TypeError('simpleQuery#removeChild: Invalid type for node given!');
 		}
 
-		return new ElementWrapper(this._n.removeChild(node._n || node));
+		return (node._n) ?
+			(node._n.parentNode.removeChild(node._n), node) :
+			new ElementWrapper(node.parentNode.removeChild(node));
 	};
 
 	/**
