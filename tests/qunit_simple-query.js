@@ -142,6 +142,36 @@ test('#createFragment', function () {
 	ok($e1.node.nodeType === 11, 'Returned wrapped element wraps a document fragment');
 });
 
+test('#remove', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1"><span id="s1">First</span><span id="s2">Second</span></div>');
+
+	var $e = $('#id1');
+	var n1 = document.getElementById('s1');
+	var $n1 = $e.select('#s1');
+	var n2 = document.getElementById('s2');
+	var $n2 = $e.select('#s2');
+	var c;
+	var $c;
+
+	throws(
+		function () { $e.remove(); },
+		TypeError,
+		'Throws type error if no object for child node given'
+	);
+
+	$c = $.remove($n1);
+	ok($c.node === n1, 'Removed node (wrapped element) returned');
+	ok($c === $n1, 'Removed node (wrapped element) returned same instance as given');
+	ok($e.childElements().length === 1, 'Remaining child count ok');
+
+	c = $e.select('#s2').node;
+	$c = $.remove(c);
+	ok($c.node === n2, 'Removed node (dom element) returned');
+	ok($c !== $n2, 'Removed node (dom element) returned, new wrapped element created');
+	ok($e.childElements().length === 0, 'Remaining child count ok');
+});
+
 module('simpleQuery Utilities');
 
 test('#toType', function () {

@@ -133,6 +133,28 @@
 		return new ElementWrapper(document.createDocumentFragment());
 	};
 
+	/**
+	 * Removes a element from the DOM and returns it as a wrapped element.
+	 * Note: If the given element was a wrapped element, the same instance is returned.
+	 * @param {object} name		The wrapped element or dom element to remove.
+	 * @returns {object}		The removed element as wrapped element.
+	 *
+	 * @see MDN https://developer.mozilla.org/de/docs/DOM/Node.removeChild
+	 */
+	simpleQuery.remove = function (node) {
+		if (typeof node !== 'object' || node === null || Array.isArray(node)) {
+			throw new TypeError('simpleQuery#remove: Invalid type for node given!');
+		}
+
+		if (node && node._n === null) {
+			return;
+		}
+
+		return (node._n) ?
+			(node._n.parentNode.removeChild(node._n), node) :
+			new ElementWrapper(node.parentNode.removeChild(node));
+	};
+
 	// ─────── css files/rules ────────────────────────────────────────────────
 
 	/**

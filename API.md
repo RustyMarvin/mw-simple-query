@@ -9,6 +9,7 @@
 	* [.create( name )](#simple-query-create)
 	* [.fromHtml( html )](#simple-query-fromhtml)
 	* [.createfragment()](#simple-query-createfragment)
+	* [.remove()](#simple-query-remove)
 	* [.addCssFile( path )](#simple-query-addcssfile)
 	* [.addCssRule( rule )](#simple-query-addcssrule)
 	* [.removeCssRules( selector )](#simple-query-removecssrules)
@@ -170,6 +171,21 @@ Returns a wrapped element wrapping a newly created document fragment.
     var e = simpleQuery.createFragment();
 
 wraps: [document.createDocumentFragment](https://developer.mozilla.org/en-US/docs/DOM/document.createDocumentFragment)
+
+[↑up](#toc)
+
+
+<a name="simple-query-remove"></a>
+### simpleQuery.remove()
+
+Removes the given wrapped element/dom node from the dom and returns it as a wrapped element.  
+Note: If the given element was a wrapped element, the same instance is returned.
+
+**returns** _{object}_: A wrapped element.
+
+    var e = simpleQuery.remove(simpleQuery.('div.header'));
+
+wraps: [element.removeChild](https://developer.mozilla.org/de/docs/DOM/Node.removeChild)
 
 [↑up](#toc)
 
