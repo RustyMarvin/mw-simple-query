@@ -640,6 +640,34 @@
 	};
 
 	/**
+	 * Sets the left position of this wrapped element by setting .style.left.
+	 * @param {number} left		Left position in pixel.
+	 * @returns {object}		This wrapped element.
+	 */
+	ElementWrapper.prototype.left = function (left) {
+		if (typeof left !== 'number') {
+			throw new TypeError('simpleQuery#left: Invalid type for left given!');
+		}
+		this._n.style.left = Math.round(left) + 'px';
+
+		return this;
+	};
+
+	/**
+	 * Sets the top position of this wrapped element by setting .style.top.
+	 * @param {number} top		Top position in pixel.
+	 * @returns {object}		This wrapped element.
+	 */
+	ElementWrapper.prototype.top = function (top) {
+		if (typeof top !== 'number') {
+			throw new TypeError('simpleQuery#top: Invalid type for top given!');
+		}
+		this._n.style.top = Math.round(top) + 'px';
+
+		return this;
+	};
+
+	/**
 	 * Sets the width of this wrapped element by setting .style.width.
 	 * @param {number} width	Width in pixel.
 	 * @returns {object}		This wrapped element.

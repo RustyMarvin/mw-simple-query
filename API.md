@@ -39,8 +39,10 @@
 	* [.blur()](#wrapped-element-blur)
 	* [.disabled( [status] )](#wrapped-element-disabled)
 	* [.offset()](#wrapped-element-offset)
-	* [.width( value )](#wrapped-element-widthheight)
-	* [.height( value )](#wrapped-element-widthheight)
+	* [.left( value )](#wrapped-element-ltwh)
+	* [.top( value )](#wrapped-element-ltwh)
+	* [.width( value )](#wrapped-element-ltwh)
+	* [.height( value )](#wrapped-element-ltwh)
 	* [.position( left, top )](#wrapped-element-position)
 	* [.data( [key] [, value] )](#wrapped-element-data)
 	* [.style( name [, value] ) / .style( obj )](#wrapped-element-style)
@@ -555,15 +557,15 @@ info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determin
 [↑up](#toc)
 
 
-<a name="wrapped-element-widthheight"></a>
-### .width( value ) / .height( value )
+<a name="wrapped-element-ltwh"></a>
+### .left( value ) / .top( value ) / .width( value ) / .height( value )
 
-Sets the width/height of the wrapped element by setting .style.width/.height.
+Sets the style properties left/top/width/height of the wrapped element.
 
-**value** _{number}_: Width/height in pixel.  
+**value** _{number}_: Left/top/width/height in pixel.  
 **returns** _{object}_: The wrapped element.
 
-    simpleQuery('div.header').width(200).height(50);
+    simpleQuery('div.header').left(200).width(50);
 
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
 

@@ -290,6 +290,40 @@ test('#offset', function () {
 	ok(o.parent === n.offsetParent && o.parent === f, 'parent ok');
 });
 
+test('#left', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1" style="position:absolute;left:100px;top:110px;width:120px;height:130px;"></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.left(); },
+		TypeError,
+		'Throws type error if no number given'
+	);
+
+	$e.left(200);
+	ok(n.style.left === '200px', 'Style.left is set correctly');
+});
+
+test('#top', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1" style="position:absolute;left:100px;top:110px;width:120px;height:130px;"></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.top(); },
+		TypeError,
+		'Throws type error if no number given'
+	);
+
+	$e.top(200);
+	ok(n.style.top === '200px', 'Style.top is set correctly');
+});
+
 test('#width', function () {
 	var $ = window.simpleQuery;
 	qfixAddHtml('<div id="id1" style="position:absolute;left:100px;top:110px;width:120px;height:130px;"></div>');
