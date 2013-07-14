@@ -44,6 +44,7 @@
 	* [.width( value )](#wrapped-element-ltwh)
 	* [.height( value )](#wrapped-element-ltwh)
 	* [.position( left, top )](#wrapped-element-position)
+	* [.dimension( width, height )](#wrapped-element-dimension)
 	* [.data( [key] [, value] )](#wrapped-element-data)
 	* [.style( name [, value] ) / .style( obj )](#wrapped-element-style)
 	* [.setClass( name )](#wrapped-element-setclass)
@@ -582,6 +583,22 @@ Sets the position of this wrapped element by setting .style.left/.top.
 **returns** _{object}_: The wrapped element.
 
     simpleQuery('div.header').position(200, 100);
+
+info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
+
+[↑up](#toc)
+
+
+<a name="wrapped-element-dimension"></a>
+### .dimension( width, height )
+
+Sets the width/height of this wrapped element by setting .style.width/.height.
+
+**width** _{number}_: Width in pixel.  
+**height** _{number}_: Height in pixel.  
+**returns** _{object}_: The wrapped element.
+
+    simpleQuery('div.header').dimension(200, 100);
 
 info: [MDN element dimensions](https://developer.mozilla.org/en-US/docs/Determining_the_dimensions_of_elements)
 

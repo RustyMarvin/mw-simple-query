@@ -381,6 +381,29 @@ test('#position', function () {
 	ok(n.style.top === '220px', 'Top is set correctly');
 });
 
+test('#dimension', function () {
+	var $ = window.simpleQuery;
+	qfixAddHtml('<div id="id1" style="position:absolute;left:100px;top:110px;width:120px;height:130px;"></div>');
+
+	var n = document.getElementById('id1');
+	var $e = $('#id1');
+
+	throws(
+		function () { $e.dimension('x', 210); },
+		TypeError,
+		'Throws type error if no number for width given'
+	);
+	throws(
+		function () { $e.dimension(220, 'x'); },
+		TypeError,
+		'Throws type error if no number for height given'
+	);
+
+	$e.dimension(210, 220);
+	ok(n.style.width === '210px', 'Style.width is set correctly');
+	ok(n.style.height === '220px', 'Style.height is set correctly');
+});
+
 module('Wrapped Element Data');
 
 test('#data', function () {

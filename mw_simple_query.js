@@ -714,6 +714,25 @@
 		return this;
 	};
 
+	/**
+	 * Sets the dimension of this wrapped element by setting .style.width/.height.
+	 * @param {number} width	The width in pixel.
+	 * @param {number} height	The height in pixel.
+	 * @returns {object}		This wrapped element.
+	 */
+	ElementWrapper.prototype.dimension = function (width, height) {
+		if (typeof width !== 'number') {
+			throw new TypeError('simpleQuery#position: Invalid type for width given!');
+		}
+		if (typeof height !== 'number') {
+			throw new TypeError('simpleQuery#position: Invalid type for height given!');
+		}
+		this._n.style.width = Math.round(width) + 'px';
+		this._n.style.height = Math.round(height) + 'px';
+
+		return this;
+	};
+
 	// ─────── data ───────────────────────────────────────────────────────────
 
 	/**
